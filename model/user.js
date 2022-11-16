@@ -16,7 +16,7 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
-    private_email: {
+    personal_email: {
         type: String,
         required: true,
         unique: true
