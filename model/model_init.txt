@@ -1,0 +1,40 @@
+
+Model design on 16/11/2022
+
+User:
+    first name
+    last name
+    kongu email
+    private email
+    password
+    mobile num
+    department
+    skills:[{}]
+    discription
+    profile_image
+    rating
+    projects_given:[{}]
+    study_project:[{}]
+    work_history:[{}]
+    onbord_project:[{}]
+    isadmin:
+    payment_status
+    payment_type
+    created On
+
+Projects:
+    ptoject_title
+    discription
+    technology_neededed
+    approval
+    stipend
+    tasks
+    project_status
+    postedon
+
+Study_Project:
+    title
+    discription
+    github_link
+    technology_used
+    postedon
