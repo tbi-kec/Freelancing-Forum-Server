@@ -16,11 +16,6 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
-    personal_email: {
-        type: String,
-        required: true,
-        unique: true
-    },
     password: {
         type: String,
     },
@@ -32,10 +27,6 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    onbord_project: [{
-        type: Schema.Types.ObjectId,
-        ref: "Project",
-    }],
     created_on: {
         type: Date,
         default: Date.now,
