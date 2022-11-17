@@ -18,6 +18,10 @@ const studyprojectSchema = new Schema({
     technology_used: {
         type: [String],
     },
+    createdBy:{
+        type:Schema.Types.ObjectId,
+        ref:"User"
+    },
     created_on: {
         type: Date,
         default: Date.now,
