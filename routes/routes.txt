@@ -1,0 +1,21 @@
+
+
+login
+/user/login (post)
+/user/forgotten_password (post)
+
+signup
+/user/signup_request (post)
+/user/signup (post)
+
+
+home page
+/constants/domain (get)
+/projects/get_project (get) limit:6
+ 
+
+domain user
+/user/getDomin_user/:domain_name (get) 
+
+
+user profile
