@@ -18,4 +18,20 @@ domain user
 /user/getDomin_user/:domain_name (get) 
 
 
-user profile
+project flow:
+/project/request/:u_id/:s_id/:p_id (get)  //after clicking on the choice on request (u_id=who provided the project; s_id=to whom ; p_id=project id)
+/project/request/:p_id/:status (accept/reject) (get)  //after user clicking reponded about the project allocation(accept/reject)
+
+user updation:
+/user/update/skills (z) body={skils}
+/user/update/study_project (post) body={study_project}
+/user/update/profile (post) body={basic details}
+
+
+project
+/project/newproject (post)
+
+/project/:id (get)
+/project/:id/delete (delete)
+/project/:id/update (path)
+

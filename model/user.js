@@ -56,6 +56,15 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Project",
     }],
+    notification:[
+        {
+            p_id:{
+                type: Schema.Types.ObjectId,
+                ref: "StudyProject",
+            },
+            message:String
+        }
+    ],
     onbord_project: [{
         type: Schema.Types.ObjectId,
         ref: "Project",

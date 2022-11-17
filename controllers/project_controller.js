@@ -23,7 +23,7 @@ module.exports.newProject = async(req,res)=>{
 }
 
 module.exports.deleteProject =async(req,res)=>{
-    const {id}=req.body
+    const {id}=req.params.id
     try {
         await Project.findByIdAndDelete(id);
         res.status(200).send("Deleted Successfully")
@@ -32,7 +32,7 @@ module.exports.deleteProject =async(req,res)=>{
     }
 }
 
-module.project.editProject = async(req,res)=>{
+module.exports.editProject = async(req,res)=>{
     const {id}=req.params
     try {
         const project =await Project.findByIdAndUpdate(id,{...req.body});
@@ -43,3 +43,12 @@ module.project.editProject = async(req,res)=>{
     }
 
 }
+
+module.exports.project_request= async (req,res)=>{
+    console.log(...req.params)
+}
+
+module.exports.project_request_status=async (req,res)=>{
+    console.log(...req.params)
+}
+

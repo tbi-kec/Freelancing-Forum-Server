@@ -9,7 +9,9 @@ const dotenv = require('dotenv')
 //routes
 const userRoutes = require('./routes/user_routes')
 const projectRoutes = require('./routes/project_routes')
-const studyProjectRoutes = require('./routes/study_project')
+const studyProjectRoutes = require('./routes/study_project_routes');
+const constantsRoutes = require('./routes/')
+const { constants } = require('buffer');
 
 //initilizing
 const app = express()
@@ -32,14 +34,13 @@ mongoose.connect(process.env.DB).then(() => {
 app.use('/user', userRoutes)
 app.use('/project', projectRoutes)
 app.use('/study',studyProjectRoutes)
+app.use('/constants',constantsRoutes)
 
 //default route
 app.get('/',(req,res)=>{
-
-
-    res.send("FreelancingForum")
-     
+    res.send("FreelancingForum")    
 })
+
 
 
 //listening port

@@ -62,3 +62,19 @@ module.exports.sendOtp = ()=>{
         
     }
 }
+
+module.exports.updateskills=()=>{
+
+}
+
+module.exports.study_project=()=>{
+
+}
+
+module.exports.update_profile=()=>{
+
+}
+
+module.exports.getDomin_user=()=>{
+    
+}
