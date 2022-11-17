@@ -44,3 +44,21 @@ module.exports.login = async (req, res) => {
         res.status(500).json(err.message)
     }
 }
+
+module.exports.getAllUsers =async(req,res) =>{
+    try {
+        const users =await User.find({}).populate('work_history').populate('study_project').populate('projects_given').populate('onbord_project');
+        res.status(200).json(users)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
+module.exports.sendOtp = ()=>{
+    const {email,otp}=req.body;
+    try {
+        
+    } catch (error) {
+        
+    }
+}

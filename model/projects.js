@@ -35,6 +35,10 @@ const projectSchema = new Schema({
         type: Boolean,
         default:false
     },
+    createdBy:{
+        type:Schema.Types.ObjectId,
+        ref:"User"
+    },
     created_on: {
         type: Date,
         default: Date.now,
