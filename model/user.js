@@ -16,19 +16,16 @@ const userSchema = new Schema({
     },
     personal_email: {
         type: String,
-        required: true,
         unique: true
     },
     password: {
         type: String,
     },
-    mobile_number: {
+    mobile: {
         type: String,
-        required:true
     },
     department: {
         type: String,
-        required: true
     },
     skills: [{
         name: String,
@@ -39,7 +36,6 @@ const userSchema = new Schema({
     },
     profile_image: {
         type: String,
-        required: true
     },
     rating: Number,
     projects_given: [{
@@ -67,17 +63,11 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Project",
     }],
-    isadmin:{
-        type:Boolean,
-        default:false
-    },
     payment_status:{
         type:String,
-        required:true
     },
     payment_type:{
         type:String,
-        required:true
     },
     created_on: {
         type: Date,
