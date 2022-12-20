@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require("path")
 const dotenv = require('dotenv')
-
+const cors=require("cors")
 //routes
 const userRoutes = require('./routes/user_routes')
 const projectRoutes = require('./routes/project_routes')
@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, "/public")))
 dotenv.config()
 app.use(express.json({ extended: true }))
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
