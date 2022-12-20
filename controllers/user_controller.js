@@ -5,19 +5,18 @@ const StudyProject = require('../model/studyProject')
 
 
 module.exports.signup = async (req, res) => {
-    const data =  {...req.body}
+    const {first_name,last_name,kongu_email,password,mobile} =  {...req.body}
     
     try {
-        const existinguser = await User.findOne({ kongu_email : data.kongu_email })
+        const existinguser = await User.findOne({ kongu_email })
         if (existinguser) {
             return res.status(400).json({ message: 'User already found..' })
         }
         const hashPassword = await bcrypt.hash(password, 12);
-        const newUser = new User(data)
-        console.log(newUser)
+        const newUser = new User({first_name,last_name,kongu_email,password:hashPassword,mobile})
         await newUser.save();
-        const token = jwt.sign({ email: newUser.newUser.kongu_email, id: newUser._id }, 'token', { expiresIn: '1h' })
-            res.status(200).json({ result: newUser, token })
+        const token = jwt.sign({ email:newUser.kongu_email, id: newUser._id }, 'token', { expiresIn: '1h' })
+            res.status(200).json({ user: newUser,token })
     } catch (err) {
         console.log(err.message)
         res.status(500).json('Something went worng...')
@@ -36,9 +35,9 @@ module.exports.login = async (req, res) => {
         if (!isPasswordCrt) {
             return res.status(400).json({ message: "Invalid credentials" })
         }
+
         const token = jwt.sign({ email: existinguser.email, id: existinguser._id }, 'token', { expiresIn: '48h' })
-         res.status(200).json({ result: existinguser, token })
-    
+         res.status(200).json({ user: existinguser,token })
     } catch(err) {
         console.log(err.message)
         res.status(500).json(err.message)
