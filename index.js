@@ -10,7 +10,7 @@ const dotenv = require('dotenv')
 const userRoutes = require('./routes/user_routes')
 const projectRoutes = require('./routes/project_routes')
 const studyProjectRoutes = require('./routes/study_project_routes');
-const constantsRoutes = require('./routes/')
+const constantsRoutes = require('./routes/constants_routes')
 const { constants } = require('buffer');
 
 //initilizing
