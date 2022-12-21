@@ -56,14 +56,14 @@ module.exports.getAllUsers = async (req, res) => {
     }
 }
 
-module.exports.sendOtp = () => {
-    const { email, otp } = req.body;
-    try {
+// module.exports.sendOtp = () => {
+//     const { kongu_email, otp } = req.body;
+//     try {
 
-    } catch (error) {
+//     } catch (error) {
 
-    }
-}
+//     }
+// }
 
 module.exports.updateskills = () => {
 
