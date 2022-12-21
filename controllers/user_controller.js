@@ -83,6 +83,7 @@ module.exports.update_profile =async (req,res) => {
         }
         const updateduser= await User.findByIdAndUpdate(id,{...req.body})
         updateduser.save()
+        res.status(200).json('Created Successfully')
         
     }catch(e){
 
