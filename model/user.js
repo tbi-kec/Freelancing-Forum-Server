@@ -36,7 +36,7 @@ const userSchema = new Schema({
     // profile_image: {
     //     type: String,
     // },
-    domain_name:[String],
+    domain:[String],
     rating: Number,
     projects_given: [{
         type: Schema.Types.ObjectId,
