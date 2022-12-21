@@ -33,9 +33,10 @@ const userSchema = new Schema({
     discription: {
         type: String,
     },
-    profile_image: {
-        type: String,
-    },
+    // profile_image: {
+    //     type: String,
+    // },
+    domain_name:[String],
     rating: Number,
     projects_given: [{
         type: Schema.Types.ObjectId,
