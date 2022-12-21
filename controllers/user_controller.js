@@ -11,7 +11,7 @@ module.exports.signup = async (req, res) => {
     try {
         const existinguser = await User.findOne({ kongu_email })
         if (existinguser) {
-            return res.status(400).json({ message: 'User already found..' })
+            return res.status(400).json('User already found..' )
         }
         const hashPassword = await bcrypt.hash(password, 12);
         const newUser = new User({ first_name, last_name, kongu_email, password: hashPassword, mobile })
@@ -25,24 +25,24 @@ module.exports.signup = async (req, res) => {
 }
 
 module.exports.login = async (req, res) => {
-    const { email, password } = req.body;
+    const { kongu_email, password } = req.body;
     try {
-        var existinguser = await User.findOne({ kongu_email: email })
+        var existinguser = await User.findOne({ kongu_email})
         if (!existinguser) {
-            existinguser = await Admin.findOne({ kongu_email: email })
+            existinguser = await Admin.findOne({ kongu_email })
             if (!existinguser) {
                 console.log("User not found...");
-                return res.status(404).json({ message: "User not found..." })
+                return res.status(404).json("User not found..." )
             }
         }
         const isPasswordCrt = await bcrypt.compare(password, existinguser.password)
         if (!isPasswordCrt) {
-            return res.status(400).json({ message: "Invalid credentials" })
+            return res.status(400).json("Password Incorrect" )
         }
         const token = jwt.sign({ email: existinguser.email, id: existinguser._id }, 'token', { expiresIn: '48h' })
         res.status(200).json({ user: existinguser, token })
     } catch (err) {
-        console.log(err.message)
+        
         res.status(500).json(err.message)
     }
 }
@@ -86,7 +86,7 @@ module.exports.update_profile =async (req,res) => {
         res.status(200).json('Created Successfully')
         
     }catch(e){
-
+        res.status(500).json(e)
     }
 
 }

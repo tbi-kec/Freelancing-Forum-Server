@@ -63,9 +63,9 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Project",
     }],
-    payment_status:{
-        type:String,
-    },
+    // payment_status:{
+    //     type:Boolean,
+    // },
     payment_type:{
         type:String,
     },
