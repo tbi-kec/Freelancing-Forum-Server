@@ -2,6 +2,8 @@ const Project = require('../model/projects')
 const ProjectHistory = require('../model/projecthistory')
 const User = require('../model/user')
 
+const { notify_user, notify_both_user } = require('../controllers/mail')
+
 module.exports.getallproject = async (req, res) => {
     try {
         const project = await Project.find({}).populate('createdBy')
@@ -53,7 +55,7 @@ module.exports.project_request = async (req, res) => {
         const { p_id, u_id, s_id } = req.params;
         const project = Project.findByIdAndUpdate(p_id, { project_status: 'pending-admin', receiver: s_id });
         const projecthistory = ProjectHistory.findAndUpdate({ project_id: p_id }, { project_status: 'pending-admin', to: s_id });
-        res.status(200).json('Project Send foe Admin Verification!')
+        res.status(200).json('Project Send for Admin Verification!')
     } catch (e) {
         res.status(500).json(e)
     }
@@ -65,17 +67,20 @@ module.exports.project_request_status = async (req, res) => {
         const { status, p_id } = req.params;
         if (status == 'accepted') {
             // mail
-            const project = Project.findByIdAndUpdate(p_id, { project_status: 'assigned' });
-            const projecthistory = ProjectHistory.findAndUpdate({ project_id: p_id }, { project_status: 'assigned' });
+            const project = Project.findByIdAndUpdate(p_id, { project_status: 'assigned' }).populate('createdBy');
+            const projecthistory = ProjectHistory.findAndUpdate({ project_id: p_id }, { project_status: 'assigned' }).populate('from');
             const user = User.findById(project.receiver);
             user.onbord_project.push(project._id);
             user.save();
+            await notify_user( project.createdBy.kongu_email, 'Your requested Project is Accepted By the User! Please check your project progress')
             res.status(200).json('You are assigned with new project')
         }
         else {
             // mail
-            const project = Project.findByIdAndUpdate(p_id, { project_status: 'created', receiver: '' });
+            const project = Project.findByIdAndUpdate(p_id, { project_status: 'created', receiver: '' }).populate('createdBy');
             const projecthistory = ProjectHistory.findAndUpdate({ project_id: p_id }, { project_status: 'created', to: '' });
+            await notify_user( project.createdBy.kongu_email, 'Your requested Project is Accepted By the User! Please check your project progress')
+
             res.status(200).json('You Rejected the Project!')
         }
 
