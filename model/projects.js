@@ -33,7 +33,6 @@ const projectSchema = new Schema({
         type: String,
         enum: ['created', 'pending-admin', 'pending-user', 'assigned', 'partial', 'completed'],
         default: 'created'
-
     },
     createdBy: {
         type: Schema.Types.ObjectId,
