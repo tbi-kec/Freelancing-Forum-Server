@@ -17,10 +17,11 @@ const projecthistorySchema = new Schema({
     accepted_on: {
         type: Date,
     },
-    project_status:{
-        type:Boolean,
-        default:false
-    }
+    project_status: {
+        type: String,
+        enum: ['created', 'pending-admin', 'pending-user', 'assigned', 'partial', 'completed'],
+        default: 'created'
+    },
 });
 
 

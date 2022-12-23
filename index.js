@@ -8,6 +8,7 @@ const dotenv = require('dotenv')
 const cors=require("cors")
 //routes
 const userRoutes = require('./routes/user_routes')
+const adminRoutes = require('./routes/admin_routes')
 const projectRoutes = require('./routes/project_routes')
 const studyProjectRoutes = require('./routes/study_project_routes');
 const constantsRoutes = require('./routes/constants_routes')
@@ -32,6 +33,7 @@ mongoose.connect(process.env.DB).then(() => {
 
 
 app.use('/user', userRoutes)
+app.use('/admin', adminRoutes)
 app.use('/project', projectRoutes)
 app.use('/study',studyProjectRoutes)
 app.use('/constants',constantsRoutes)
