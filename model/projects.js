@@ -14,28 +14,30 @@ const projectSchema = new Schema({
         type: [String],
         required: true
     },
-    approval: {
-        type: Boolean,
-        required: true
-    },
     stipend: {
         type: Number,
     },
     tasks: {
         type: [{
-            title:String,
-            start_time:Date,
-            dead_line:Date,
-            commpleted:Boolean
+            title: String,
+            start_time: Date,
+            dead_line: Date,
+            completed: Boolean
         }],
     },
-    project_status: {
-        type: Boolean,
-        default:false
+    receiver:{
+        type: Schema.Types.ObjectId,
+        ref: "User"
     },
-    createdBy:{
-        type:Schema.Types.ObjectId,
-        ref:"User"
+    project_status: {
+        type: String,
+        enum: ['created', 'pending-admin', 'pending-user', 'assigned', 'partial', 'completed'],
+        default: 'created'
+
+    },
+    createdBy: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
     },
     created_on: {
         type: Date,
