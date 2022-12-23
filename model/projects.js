@@ -2,18 +2,16 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose
 
 const projectSchema = new Schema({
-    project_title: {
+    title: {
         type: String,
-        required: true
+      
     },
     description: {
         type: String,
-        required: true
+       
     },
-    technology_needed: {
-        type: [String],
-        required: true
-    },
+        skills: [String],
+
     stipend: {
         type: Number,
     },
@@ -33,7 +31,6 @@ const projectSchema = new Schema({
         type: String,
         enum: ['created', 'pending-admin', 'pending-user', 'assigned', 'partial', 'completed'],
         default: 'created'
-
     },
     createdBy: {
         type: Schema.Types.ObjectId,

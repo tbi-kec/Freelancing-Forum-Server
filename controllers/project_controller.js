@@ -7,6 +7,7 @@ module.exports.getallproject = async (req, res) => {
         const project = await Project.find({}).populate('createdBy')
         res.status(200).json(project)
     } catch (error) {
+        console.log(error)
         res.status(500).json(error)
     }
 }
@@ -18,6 +19,7 @@ module.exports.newProject = async (req, res) => {
         res.status(200).json("success");
 
     } catch (error) {
+        console.log(error)
         res.status(500).json(error)
     }
 }
