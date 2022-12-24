@@ -9,7 +9,7 @@ router.get('/all',getAllUsers)
 router.post('/login',login)
 router.post('/signup',signup)
 router.post('/otp',otp_sendEmail)
-
+router.get('/:id',get_user)
 //forgotten_password
 router.post('/forgotten-password',change_password_request)
 
@@ -20,5 +20,5 @@ router.patch('/update/study_project',study_project)
 router.post('/update/profile',update_profile)
 
 router.get('/getDomin_user/:domain_name',getDomin_user)
-router.get('/:id',get_user)
+
 module.exports=router;
