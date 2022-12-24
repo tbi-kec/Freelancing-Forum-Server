@@ -30,14 +30,17 @@ const userSchema = new Schema({
         name: String,
         level: String
     }],
-    discription: {
+    description: {
         type: String,
     },
     // profile_image: {
     //     type: String,
     // },
     domain:[String],
-    rating: Number,
+    rating: {
+        type:Number,
+        default:0
+    },
     projects_given: [{
         type: Schema.Types.ObjectId,
         ref: "Project",
