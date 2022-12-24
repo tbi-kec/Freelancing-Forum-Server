@@ -51,7 +51,7 @@ module.exports.get_user=async (req,res)=>{
         const {id}=req.params.id;
         const user =await User.findById(id).populate('work_history').populate('study_project').populate('projects_given').populate('onbord_project');
         res.status(200).json(user)
-    }catch(e){
+    }catch(error){
         res.status(500).json(error)
     }
    
