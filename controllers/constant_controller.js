@@ -1,12 +1,12 @@
 const Constant = require('../model/constant')
 
 
-module.exports.getdomain = async (req,res) => {
+module.exports.getdomain = async (req, res) => {
     const result = await Constant.find({});
-    res.status(200).json({ result: result.domain })
+    res.status(200).json(result)
 }
 
-module.exports.upload = async (req,res) => {
+module.exports.upload = async (req, res) => {
     const data = {
         domain: [
             "Web Developer",
@@ -86,5 +86,5 @@ module.exports.upload = async (req,res) => {
     }
     const result = await new Constant(data);
     await result.save();
-    res.status(200).json({ result: result.domain })
+    res.status(200).json(result)
 }
