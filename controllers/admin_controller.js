@@ -20,6 +20,12 @@ module.exports.admin_response = async (req, res) => {
         if (status == 'accepted') {
             const project = await Project.find({ project_status: 'pending-user' }).populate('createdBy').populate('receiver')
             const projecthistory = await ProjectHistory.find({ project_status: 'pending-user' }).populate('from')
+            const user = await User.findById(project.developer)
+            user.notification.push({
+                p_id:project._id,
+                message:''
+            });
+            user.save();
             // mail
             await notify_both_user(project.receiver.kongu_email, 'You are Requsted to Do The Project !Pleace Check your Notification Panal', 
             project.createdBy.kongu_email, 'Your requested Project is Accepted By the Admin')
