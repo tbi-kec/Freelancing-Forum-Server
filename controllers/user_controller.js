@@ -46,6 +46,16 @@ module.exports.login = async (req, res) => {
         res.status(500).json(err.message)
     }
 }
+module.exports.get_user=async (req,res)=>{
+    try{
+        const {id}=req.params.id;
+        const user =await User.findById(id).populate('work_history').populate('study_project').populate('projects_given').populate('onbord_project');
+        res.status(200).json(user)
+    }catch(e){
+        res.status(500).json(error)
+    }
+   
+}
 
 module.exports.getAllUsers = async (req, res) => {
     try {
