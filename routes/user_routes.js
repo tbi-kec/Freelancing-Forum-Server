@@ -2,7 +2,7 @@ const express=require('express')
 const router = express.Router();
 const {otp_sendEmail} =require('../controllers/mail')
 
-const {login,signup,getAllUsers,sendOtp,updateskills,study_project,update_profile,getDomin_user} = require('../controllers/user_controller')
+const {login,signup,getAllUsers,get_user,sendOtp,updateskills,study_project,update_profile,getDomin_user} = require('../controllers/user_controller')
 const {change_password,change_password_request} = require('../controllers/forgotten_password_controller')
 
 router.get('/all',getAllUsers)
@@ -20,4 +20,5 @@ router.patch('/update/study_project',study_project)
 router.post('/update/profile',update_profile)
 
 router.get('/getDomin_user/:domain_name',getDomin_user)
+router.get('/:id',get_user)
 module.exports=router;
