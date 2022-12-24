@@ -55,7 +55,7 @@ module.exports.project_request = async (req, res) => {
     // p_id:project id   u_id:user id (provider) s_id: student id (receiver)   
     try {
         const { p_id, u_id, s_id } = req.params;
-        const project = Project.findByIdAndUpdate(p_id, { project_status: 'pending-admin', receiver: s_id });
+        const project = Project.findByIdAndUpdate(p_id, { project_status: 'pending-admin', developer: s_id });
         const projecthistory = ProjectHistory.findAndUpdate({ project_id: p_id }, { project_status: 'pending-admin', to: s_id });
         res.status(200).json('Project Send for Admin Verification!')
     } catch (e) {
@@ -79,7 +79,7 @@ module.exports.project_request_status = async (req, res) => {
         }
         else {
             // mail
-            const project = Project.findByIdAndUpdate(p_id, { project_status: 'created', receiver: '' }).populate('createdBy');
+            const project = Project.findByIdAndUpdate(p_id, { project_status: 'created', developer: '' }).populate('createdBy');
             const projecthistory = ProjectHistory.findAndUpdate({ project_id: p_id }, { project_status: 'created', to: '' });
             await notify_user( project.createdBy.kongu_email, 'Your requested Project is Accepted By the User! Please check your project progress')
 

@@ -26,7 +26,7 @@ module.exports.admin_response = async (req, res) => {
             res.status(200).json('Accepted!')
         }
         else {
-            const project = await Project.findByIdAndUpdate(p_id, { project_status: 'created', receiver: '' });
+            const project = await Project.findByIdAndUpdate(p_id, { project_status: 'created', developer: '' });
             const projecthistory = await ProjectHistory.findAndUpdate({ project_id: p_id }, { project_status: 'created', to: '' });
             await notify_user( project.createdBy.kongu_email, 'Your requested Project is Rejected By the Admin')
             res.status(200).json('Project Rejected!')
