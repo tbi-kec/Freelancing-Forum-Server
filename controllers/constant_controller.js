@@ -1,7 +1,7 @@
 const Constant = require('../model/constant')
 
 
-module.exports.getdomain = async () => {
+module.exports.getdomain = async (req,res) => {
     const result = await Constant.find({});
     res.status(200).json({ result: result.domain })
 }
