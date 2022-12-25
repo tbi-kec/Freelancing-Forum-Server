@@ -119,7 +119,7 @@ module.exports.getDept_user = async (req, res) => {
 
 module.exports.study_project = async (req, res) => {
     try {
-        const { u_id } = req.params
+        const { u_id } = req.body.id
         const user = await User.findById(u_id);
         const user_project = new StudyProject({ ...req.body });
         user_project.save();
