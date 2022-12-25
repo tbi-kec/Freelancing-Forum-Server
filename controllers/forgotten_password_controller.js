@@ -21,7 +21,7 @@ exports.change_password_request = async (req, res) => {
         token: crypto.randomBytes(32).toString("hex"),
       }).save();
     }
-    const link = `http://localhost:3000/forgotton-password/${user._id}/${token.token}`;
+    const link = `http://localhost:3000/forgotten-password/${user._id}/${token.token}`;
     await resetpassword_sendEmail(user.kongu_email, "Your Password reset request is accepted", link);
     res.status(200).json("Password Reset Link Sent To Your Email Account");
 
@@ -36,11 +36,11 @@ exports.change_password_request = async (req, res) => {
 exports.change_password = async (req, res) => {
   if (req.body.password === req.body.confirm_password) {
     try {
-      const user = await User.findOne({ _id: req.params.userId });
+      const user = await User.findOne({ _id: req.body.userId });
       if (!user) return res.status(400).json("Invalid Link")
       const token = await Token.findOne({
         userId: user._id,
-        token: req.params.token,
+        token: req.body.token,
       });
       if (!token) return res.status(400).json("Invalid Link");
       if (!user.verified) user.verified = true;

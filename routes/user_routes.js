@@ -15,7 +15,7 @@ router.delete('/notification/:u_id/:p_id/delete',delete_notification)
 //forgotten_password
 router.post('/forgotten-password',change_password_request)
 
-router.post('/forgotten-password/:userId/:token',change_password)
+router.post('/reset/forgotten-password/',change_password)
 
 router.patch('/update/skills',updateskills)
 router.patch('/update/study_project',study_project)
