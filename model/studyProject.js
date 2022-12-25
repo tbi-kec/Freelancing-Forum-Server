@@ -12,10 +12,11 @@
                 type: String,
                 required: true
             },
-            github:{
+            project_date:String,
+            link:{
                 type: String,
             },
-            technology_used: {
+            technology: {
                 type: [String],
             },
             createdBy:{
