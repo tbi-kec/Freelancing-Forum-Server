@@ -76,7 +76,7 @@ module.exports.update_profile = async (req, res) => {
         }
         const updateduser = await User.findByIdAndUpdate(id, { ...req.body })
         updateduser.save()
-        res.status(200).json('Created Successfully')
+        res.status(200).json('updated Successfully')
 
     } catch (e) {
         res.status(500).json(e)
@@ -117,6 +117,19 @@ module.exports.getDept_user = async (req, res) => {
     }
 }
 
+module.exports.study_project = async (req, res) => {
+    try {
+        const { u_id } = req.params
+        const user = await User.findById(u_id);
+        const user_project = new StudyProject({ ...req.body });
+        user_project.save();
+        user.study_project.push(user_project._id)
+        res.status(200).json('Added Successfully');
+    } catch (e) {
+        res.status(500).json(e);
+    }
+}
+
 // module.exports.sendOtp = () => {
 //     const { kongu_email, otp } = req.body;
 //     try {
@@ -130,7 +143,5 @@ module.exports.updateskills = () => {
 
 }
 
-module.exports.study_project = () => {
 
-}
 
