@@ -11,10 +11,10 @@ module.exports.getAllProjects = async (req, res) => {
 
 module.exports.newProject = async (req, res) => {
     try {
-        const { u_id } = req.params.p_id
+        
         const studyproject = new StudyProject({ ...req.body })
-        const user = await user.findById(u_id)
-        user.push(studyproject._id)
+        const user = await user.findById(req.body.createdBy)
+        user.push(studyproject)
         await project.save();
         await user.save();
         res.status(200).json("success")

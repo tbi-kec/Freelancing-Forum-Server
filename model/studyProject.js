@@ -1,9 +1,7 @@
 
-        const mongoose = require('mongoose');
-        const { Schema } = mongoose
-
-
-        const studyprojectSchema = new Schema({
+const mongoose = require('mongoose');
+const { Schema } = mongoose
+const studyprojectSchema = new Schema({
             title: {
                 type: String,
                 required: true
@@ -12,7 +10,7 @@
                 type: String,
                 required: true
             },
-            project_date:String,
+            project_date:Date,
             link:{
                 type: String,
             },
@@ -27,7 +25,7 @@
                 type: Date,
                 default: Date.now,
             }
-        });
+});
 
 
         module.exports = mongoose.model("StudyProject", studyprojectSchema);
