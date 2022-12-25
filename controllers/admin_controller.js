@@ -21,11 +21,19 @@ module.exports.admin_response = async (req, res) => {
             const project = await Project.find({ project_status: 'pending-user' }).populate('createdBy').populate('receiver')
             const projecthistory = await ProjectHistory.find({ project_status: 'pending-user' }).populate('from')
             const user = await User.findById(project.developer)
-            user.notification.push({
-                p_id:project._id,
-                message:''
+            const provider=User.findById(project.createdBy)
+            //user notification
+            user.notification = user.notification.push({
+                p_id: project._id,
+                message: 'Assigned'
+            });
+            //provider notification
+            provider.notification = provider.notification.push({
+                p_id: project._id,
+                message: 'Accepted By Admin'
             });
             user.save();
+            provider.save();
             // mail
             await notify_both_user(project.receiver.kongu_email, 'You are Requsted to Do The Project !Pleace Check your Notification Panal', 
             project.createdBy.kongu_email, 'Your requested Project is Accepted By the Admin')
@@ -34,6 +42,13 @@ module.exports.admin_response = async (req, res) => {
         else {
             const project = await Project.findByIdAndUpdate(p_id, { project_status: 'created', developer: '' });
             const projecthistory = await ProjectHistory.findAndUpdate({ project_id: p_id }, { project_status: 'created', to: '' });
+            const user = await User.findById(project.createdBy)
+            user.notification.push({
+                p_id:project._id,
+                message:'Rejected'
+            });
+            user.save();
+            //mail
             await notify_user( project.createdBy.kongu_email, 'Your requested Project is Rejected By the Admin')
             res.status(200).json('Project Rejected!')
         }

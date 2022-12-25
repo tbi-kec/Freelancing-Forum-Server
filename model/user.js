@@ -57,7 +57,7 @@ const userSchema = new Schema({
         {
             p_id:{
                 type: Schema.Types.ObjectId,
-                ref: "StudyProject",
+                ref: "Project",
             },
             message:String
         }

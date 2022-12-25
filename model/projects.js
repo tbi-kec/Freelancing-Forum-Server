@@ -28,6 +28,10 @@ const projectSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     },
+    requested:[{
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }],
     project_status: {
         type: String,
         enum: ['created', 'pending-admin', 'pending-user', 'assigned', 'partial', 'completed'],
