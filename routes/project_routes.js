@@ -10,11 +10,11 @@ router.patch('/:id',editProject)
 router.delete('/:id',deleteProject)
 
 //provider
-router.get('/project/provider/request/:d_id/:p_id',project_request) //d_id ->developer Id   p_id-> Project Id
-router.get('/project/provider/request/:p_id/:status',project_request_status)
+router.get('/provider/request/:d_id/:p_id',project_request) //d_id ->developer Id   p_id-> Project Id
+router.get('/provider/request/:p_id/:status',project_request_status)
 
 //developer
-router.get('/project/developer/request/:d_id/:p_id',project_developer_request)
-router.get('/project/developer/request/:d_id/:p_id/rejected',project_developer_request_rejected)
+router.get('/developer/request/:d_id/:p_id',project_developer_request)
+router.get('/developer/request/:d_id/:p_id/rejected',project_developer_request_rejected)
 
 module.exports=router;
