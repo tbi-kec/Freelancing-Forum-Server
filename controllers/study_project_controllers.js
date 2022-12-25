@@ -1,5 +1,5 @@
 const StudyProject = require('../model/studyProject.js');
-const user = require('../model/user.js');
+const User = require('../model/user.js');
 module.exports.getAllProjects = async (req, res) => {
     try {
         const project = await StudyProject.find({}).populate('createdBy');
@@ -11,15 +11,14 @@ module.exports.getAllProjects = async (req, res) => {
 
 module.exports.newProject = async (req, res) => {
     try {
-        const { u_id } = req.params.p_id
-        const studyproject = new StudyProject({ ...req.body })
-        const user = await user.findById(u_id)
-        user.push(studyproject._id)
-        await project.save();
-        await user.save();
-        res.status(200).json("success")
-    } catch (error) {
-        res.status(500).json(error)
+        const { u_id } = req.body.createdBy;
+        const user = await User.findById(u_id);
+        const user_project = new StudyProject({ ...req.body });
+        user_project.save();
+        user.study_project.push(user_project._id)
+        res.status(200).json('Added Successfully');
+    } catch (e) {
+        res.status(500).json(e);
     }
 }
 
