@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 const User = require('../model/user')
 const Admin = require('../model/admin')
 const StudyProject = require('../model/studyProject')
-const { findById } = require('../model/user')
+
 
 
 module.exports.signup = async (req, res) => {
@@ -119,13 +119,13 @@ module.exports.getDept_user = async (req, res) => {
 
 module.exports.study_project = async (req, res) => {
     try {
-        const { u_id } = req.body.id
-        const user = await User.findById(u_id);
+        const user = await User.findById(req.body.createdBy);
         const user_project = new StudyProject({ ...req.body });
         user_project.save();
-        user.study_project.push(user_project._id)
+        user.study_project.push(user_project)
         res.status(200).json('Added Successfully');
     } catch (e) {
+        console.log(e.message)
         res.status(500).json(e);
     }
 }

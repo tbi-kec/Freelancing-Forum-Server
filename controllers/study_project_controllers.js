@@ -12,12 +12,16 @@ module.exports.getAllProjects = async (req, res) => {
 module.exports.newProject = async (req, res) => {
     try {
         const  u_id  = req.body.createdBy;
+        console.log(u_id)
         const user = await User.findById(u_id);
+        console.log(user)
         const user_project = new StudyProject({ ...req.body });
         user_project.save();
-        user.study_project.push(user_project._id)
+        user.study_project.push(user_project)
+        await user.save();
         res.status(200).json('Added Successfully');
     } catch (e) {
+        console.log(e.message)
         res.status(500).json(e);
     }
 }
