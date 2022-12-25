@@ -21,7 +21,7 @@ exports.change_password_request = async (req, res) => {
         token: crypto.randomBytes(32).toString("hex"),
       }).save();
     }
-    const link = `http://localhost:3000/forgotton_password/${user._id}/${token.token}`;
+    const link = `http://localhost:3000/forgotton-password/${user._id}/${token.token}`;
     await resetpassword_sendEmail(user.kongu_email, "Your Password reset request is accepted", link);
     res.status(200).json("Password Reset Link Sent To Your Email Account");
 
