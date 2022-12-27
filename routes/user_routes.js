@@ -5,11 +5,12 @@ const {otp_sendEmail} =require('../controllers/mail')
 const {login,signup,getAllUsers,get_user,sendOtp,updateskills,study_project,update_profile,getDomin_user, delete_notification, getDept_user} = require('../controllers/user_controller')
 const {change_password,change_password_request} = require('../controllers/forgotten_password_controller')
 
-router.get('/all',getAllUsers)
+router.get('/',getAllUsers)
+router.get('/:id',get_user)
 router.post('/login',login)
 router.post('/signup',signup)
 router.post('/otp',otp_sendEmail)
-router.post('/',get_user)
+
 //notification dlelte
 router.delete('/notification/delete',delete_notification)
 //forgotten_password

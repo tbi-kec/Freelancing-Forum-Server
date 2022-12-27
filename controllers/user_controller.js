@@ -49,7 +49,7 @@ module.exports.login = async (req, res) => {
 }
 module.exports.get_user = async (req, res) => {
     try {
-        const  id  = req.body.id;
+        const  {id}  = req.params;
         const user = await User.findById(id).populate('work_history').populate('study_project').populate('projects_given').populate('onbord_project').populate('notification');
         res.status(200).json(user)
     } catch (e) {
@@ -63,6 +63,7 @@ module.exports.getAllUsers = async (req, res) => {
         const users = await User.find({}).populate('work_history').populate('study_project').populate('projects_given').populate('onbord_project').populate('notification');
         res.status(200).json(users)
     } catch (error) {
+    
         res.status(500).json(error)
     }
 }

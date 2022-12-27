@@ -6,42 +6,45 @@ const { notify_user, notify_both_user } = require('../controllers/mail')
 
 module.exports.requested_project = async (req, res) => {
     try {
-        const project = await Project.find({ project_status: 'pending-admin' }).populate('createdBy').populate('developer')
+        const project = await Project.find({}).populate('createdBy').populate('developer')
         res.status(200).json(project)
     } catch (e) {
         res.status(500).json(e)
 
     }
-
 }
+
 module.exports.admin_response = async (req, res) => {
     try {
         const { status, p_id } = {...req.body};
         if (status == 'accepted') {
-            const project = await Project.find({ project_status: 'pending-user' }).populate('createdBy').populate('receiver')
-            const projecthistory = await ProjectHistory.find({ project_status: 'pending-user' }).populate('from')
-            const user = await User.findById(project.developer)
-            const provider=User.findById(project.createdBy)
+            const project = await Project.findByIdAndUpdate(p_id,{project_status:"pending-user"}).populate('createdBy').populate('developer')
+           // const projecthistory = await ProjectHistory.find({ project_status: 'pending-user' }).populate('from')
+           
+            const user = await User.findById(project.developer._id)
+            const provider=await User.findById(project.createdBy._id)
+            
             //user notification
-            user.notification = user.notification.push({
+            user.notification.push({
                 p_id: project._id,
                 message: 'Assigned'
             });
             //provider notification
-            provider.notification = provider.notification.push({
+           provider.notification.push({
                 p_id: project._id,
                 message: 'Accepted By Admin'
             });
             user.save();
             provider.save();
+            project.save();
             // mail
-            await notify_both_user(project.receiver.kongu_email, 'You are Requsted to Do The Project !Pleace Check your Notification Panal', 
+            await notify_both_user(project.developer.kongu_email, 'You are Requsted to Do The Project !Pleace Check your Notification Panal', 
             project.createdBy.kongu_email, 'Your requested Project is Accepted By the Admin')
             res.status(200).json('Accepted!')
         }
         else {
-            const project = await Project.findByIdAndUpdate(p_id, { project_status: 'created', developer: '' });
-            const projecthistory = await ProjectHistory.findAndUpdate({ project_id: p_id }, { project_status: 'created', to: '' });
+            const project = await Project.findByIdAndUpdate(p_id, { project_status: 'created', developer: null });
+           // const projecthistory = await ProjectHistory.findAndUpdate({ project_id: p_id }, { project_status: 'created', to: '' });
             const user = await User.findById(project.createdBy)
             user.notification.push({
                 p_id:project._id,
@@ -53,6 +56,7 @@ module.exports.admin_response = async (req, res) => {
             res.status(200).json('Project Rejected!')
         }
     } catch (e) {
+        console.log(e.message)
         res.status(500).json(e)
     }
 
