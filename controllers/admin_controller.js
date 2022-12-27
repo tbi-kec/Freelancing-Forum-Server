@@ -6,7 +6,7 @@ const { notify_user, notify_both_user } = require('../controllers/mail')
 
 module.exports.requested_project = async (req, res) => {
     try {
-        const project = await ProjectHistory.find({ project_status: 'pending-admin' }).populate('from').populate('to').populate('project_id')
+        const project = await Project.find({ project_status: 'pending-admin' }).populate('createdBy').populate('developer')
         res.status(200).json(project)
     } catch (e) {
         res.status(500).json(e)
