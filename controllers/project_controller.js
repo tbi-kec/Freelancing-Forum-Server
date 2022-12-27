@@ -55,7 +55,7 @@ module.exports.editProject = async (req, res) => {
 
 //developer
 module.exports.project_developer_request = async (req, res) => {
-    console.log(...req.params)
+    //console.log(...req.params)
     // p_id:project id   d_id:user id (developer)   
     try {
         const { p_id, d_id } = req.params;
@@ -69,7 +69,7 @@ module.exports.project_developer_request = async (req, res) => {
     }
 }
 module.exports.project_developer_request_rejected = async (req, res) => {
-    console.log(...req.params)
+    //console.log(...req.params)
     // p_id:project id   d_id:developer id   
     try {
         const { p_id, d_id } = req.params;
@@ -92,20 +92,24 @@ module.exports.project_developer_request_rejected = async (req, res) => {
 
 //provider
 module.exports.project_request = async (req, res) => {
-    console.log(...req.params)
+   // console.log(...req.params)
     // p_id:project id   d_id: d id (developer)   
     try {
-        const { p_id, d_id } = req.params;
-        const project = Project.findByIdAndUpdate(p_id, { project_status: 'pending-admin', developer: d_id });
-        const projecthistory = ProjectHistory.findAndUpdate({ project_id: p_id }, { project_status: 'pending-admin', to: d_id });
+        const { p_id, d_id } = req.body;
+        console.log(p_id,d_id)
+        const project = await Project.findByIdAndUpdate(p_id, { project_status: 'pending-admin', developer: d_id });
+        //const projecthistory = await ProjectHistory.findByIdAndUpdate({ project_id: p_id }, { project_status: 'pending-admin', to: d_id });
+        await project.save();
+        //await projecthistory.save();
         res.status(200).json('Project Send for Admin Verification!')
     } catch (e) {
+        console.log(e.message)
         res.status(500).json(e)
     }
 }
 
 module.exports.project_request_status = async (req, res) => {
-    console.log(...req.params)
+   // console.log(...req.params)
     try {
         const { status, p_id } = req.params;
         if (status == 'accepted') {
