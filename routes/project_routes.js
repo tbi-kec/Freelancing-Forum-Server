@@ -11,10 +11,10 @@ router.delete('/delete',deleteProject)
 
 //provider
 router.post('/provider/request',project_request) //d_id ->developer Id   p_id-> Project Id
-router.get('/provider/request/status',project_request_status)
+router.post('/provider/request/status',project_request_status)
 
 //developer
-router.get('/developer/request/:d_id/:p_id',project_developer_request)
-router.get('/developer/request/:d_id/:p_id/rejected',project_developer_request_rejected)
+router.post('/developer/request',project_developer_request)
+router.post('/developer/request/rejected',project_developer_request_rejected)
 
 module.exports=router;

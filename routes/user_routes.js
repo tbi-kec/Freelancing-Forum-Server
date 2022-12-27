@@ -9,7 +9,7 @@ router.get('/all',getAllUsers)
 router.post('/login',login)
 router.post('/signup',signup)
 router.post('/otp',otp_sendEmail)
-router.get('/',get_user)
+router.post('/',get_user)
 //notification dlelte
 router.delete('/notification/delete',delete_notification)
 //forgotten_password
@@ -22,8 +22,8 @@ router.patch('/update/study_project',study_project)
 router.post('/update/profile',update_profile)
 
 //user show
-router.get('/getDomin_user/',getDomin_user)
-router.get('/dept_user/',getDept_user)
+router.post('/getDomin_user/',getDomin_user)
+router.post('/dept_user/',getDept_user)
 
 
 module.exports=router;
