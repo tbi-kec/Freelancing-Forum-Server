@@ -31,7 +31,7 @@ module.exports.newProject = async (req, res) => {
 }
 
 module.exports.deleteProject = async (req, res) => {
-    const { id } = req.params.id
+    const  id  = req.body.id
     try {
         await Project.findByIdAndDelete(id);
         await ProjectHistory.findOneAndDelete({ project_id: id });
@@ -42,7 +42,7 @@ module.exports.deleteProject = async (req, res) => {
 }
 
 module.exports.editProject = async (req, res) => {
-    const { id } = req.params
+    const  id  = req.body.id
     try {
         const project = await Project.findByIdAndUpdate(id, { ...req.body });
         await project.save()
@@ -58,7 +58,7 @@ module.exports.project_developer_request = async (req, res) => {
     //console.log(...req.params)
     // p_id:project id   d_id:user id (developer)   
     try {
-        const { p_id, d_id } = req.params;
+        const { p_id, d_id } = {...req.body};
         const project = Project.findById(p_id);
         const projecthistory = ProjectHistory.findById({ project_id: p_id });
         project.requested.push(d_id)
@@ -72,7 +72,7 @@ module.exports.project_developer_request_rejected = async (req, res) => {
     //console.log(...req.params)
     // p_id:project id   d_id:developer id   
     try {
-        const { p_id, d_id } = req.params;
+        const { p_id, d_id } = {...req.body};
         const project = Project.findById(p_id).populate('requested');
         const projecthistory = ProjectHistory.findById({ project_id: p_id });
         project.requested = project.requested.filter(item => item._id !== d_id);
@@ -95,7 +95,7 @@ module.exports.project_request = async (req, res) => {
    // console.log(...req.params)
     // p_id:project id   d_id: d id (developer)   
     try {
-        const { p_id, d_id } = req.body;
+        const { p_id, d_id } ={...req.body};
         console.log(p_id,d_id)
         const project = await Project.findByIdAndUpdate(p_id, { project_status: 'pending-admin', developer: d_id });
         //const projecthistory = await ProjectHistory.findByIdAndUpdate({ project_id: p_id }, { project_status: 'pending-admin', to: d_id });
@@ -111,7 +111,7 @@ module.exports.project_request = async (req, res) => {
 module.exports.project_request_status = async (req, res) => {
    // console.log(...req.params)
     try {
-        const { status, p_id } = req.params;
+        const { status, p_id } = {...req.body};
         if (status == 'accepted') {
             // mail
             const project = Project.findByIdAndUpdate(p_id, { project_status: 'assigned' }).populate('createdBy');

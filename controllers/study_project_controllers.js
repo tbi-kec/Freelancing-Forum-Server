@@ -27,7 +27,7 @@ module.exports.newProject = async (req, res) => {
 }
 
 module.exports.deleteProject = async (req, res) => {
-    const { id } = req.params
+    const  id  = req.body.id
     try {
         const deleted = await StudyProject.findByIdAndDelete(id)
         const user=User.findById(deleted.createdBy);
@@ -43,7 +43,7 @@ module.exports.deleteProject = async (req, res) => {
 }
 
 module.exports.updateProject = async (req, res) => {
-    const { id } = req.params
+    const  id  = req.body.id
     try {
         const project = await StudyProject.findByIdAndUpdate(id, { ...req.body });
         await project.save();

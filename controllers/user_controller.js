@@ -49,7 +49,7 @@ module.exports.login = async (req, res) => {
 }
 module.exports.get_user = async (req, res) => {
     try {
-        const { id } = req.params;
+        const  id  = req.body.id;
         const user = await User.findById(id).populate('work_history').populate('study_project').populate('projects_given').populate('onbord_project').populate('notification');
         res.status(200).json(user)
     } catch (e) {
@@ -86,7 +86,7 @@ module.exports.update_profile = async (req, res) => {
 
 module.exports.delete_notification = async (req, res) => {
     try {
-        const { u_id, p_id } = req.params;
+        const { u_id, p_id } = { ...req.body };
         const user = await User.findById(u_id).populate('notification');
         user.notification = user.notification.filter(item => item.p_id !== p_id);
         await user.save();
@@ -100,7 +100,7 @@ module.exports.delete_notification = async (req, res) => {
 
 module.exports.getDomin_user = async (req, res) => {
     try {
-        const { domain_name } = req.params;
+        const  domain_name  = req.body.domain_name;
         const users = await User.find({ domain: { $in: [domain_name] } });
         res.status(200).json(users);
     } catch (e) {
@@ -109,7 +109,7 @@ module.exports.getDomin_user = async (req, res) => {
 }
 module.exports.getDept_user = async (req, res) => {
     try {
-        const { dept_name } = req.params;
+        const  dept_name  = req.body.dept_name;
         const users = await User.find({ department: { $in: [dept_name] } });
         res.status(200).json(users);
     } catch (e) {

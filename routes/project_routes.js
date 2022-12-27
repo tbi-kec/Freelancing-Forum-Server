@@ -6,12 +6,12 @@ const {getallproject,newProject,editProject,deleteProject,project_request,projec
 
 router.get('/all',getallproject)
 router.post('/',newProject)
-router.patch('/:id',editProject)
-router.delete('/:id',deleteProject)
+router.patch('/edit',editProject)
+router.delete('/delete',deleteProject)
 
 //provider
 router.post('/provider/request',project_request) //d_id ->developer Id   p_id-> Project Id
-router.get('/provider/request/:p_id/:status',project_request_status)
+router.get('/provider/request/status',project_request_status)
 
 //developer
 router.get('/developer/request/:d_id/:p_id',project_developer_request)

@@ -9,9 +9,9 @@ router.get('/all',getAllUsers)
 router.post('/login',login)
 router.post('/signup',signup)
 router.post('/otp',otp_sendEmail)
-router.get('/:id',get_user)
+router.get('/',get_user)
 //notification dlelte
-router.delete('/notification/:u_id/:p_id/delete',delete_notification)
+router.delete('/notification/delete',delete_notification)
 //forgotten_password
 router.post('/forgotten-password',change_password_request)
 
@@ -22,8 +22,8 @@ router.patch('/update/study_project',study_project)
 router.post('/update/profile',update_profile)
 
 //user show
-router.get('/getDomin_user/:domain_name',getDomin_user)
-router.get('/dept_user/:dept_name',getDept_user)
+router.get('/getDomin_user/',getDomin_user)
+router.get('/dept_user/',getDept_user)
 
 
 module.exports=router;

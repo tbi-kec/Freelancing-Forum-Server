@@ -3,7 +3,7 @@ const router=express.Router()
 const {getAllProjects,newProject,updateProject,deleteProject}=require('../controllers/study_project_controllers')
 router.get('/all',getAllProjects)
 router.post('/',newProject)
-router.delete('/:id',deleteProject)
-router.patch('/:id',updateProject)
+router.delete('/delete',deleteProject)
+router.patch('/update',updateProject)
 
 module.exports=router

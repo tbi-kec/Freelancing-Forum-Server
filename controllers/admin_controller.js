@@ -16,7 +16,7 @@ module.exports.requested_project = async (req, res) => {
 }
 module.exports.admin_response = async (req, res) => {
     try {
-        const { status, p_id } = req.params;
+        const { status, p_id } = {...req.body};
         if (status == 'accepted') {
             const project = await Project.find({ project_status: 'pending-user' }).populate('createdBy').populate('receiver')
             const projecthistory = await ProjectHistory.find({ project_status: 'pending-user' }).populate('from')
