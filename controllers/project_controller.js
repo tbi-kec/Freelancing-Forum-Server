@@ -17,7 +17,7 @@ module.exports.getallproject = async (req, res) => {
 module.exports.newProject = async (req, res) => {
     try {
         const project = new Project({ ...req.body })
-        const projecthistory = new ProjectHistory({ project_id: project._id, from: project.createdBy })
+        // const projecthistory = new ProjectHistory({ project_id: project._id, from: project.createdBy })
         const user = await User.findById(project.createdBy)
         user.projects_given.push(project);
         await user.save();
@@ -34,7 +34,7 @@ module.exports.deleteProject = async (req, res) => {
     const  id  = req.body.id
     try {
         await Project.findByIdAndDelete(id);
-        await ProjectHistory.findOneAndDelete({ project_id: id });
+        // await ProjectHistory.findOneAndDelete({ project_id: id });
         res.status(200).json("Deleted Successfully")
     } catch (error) {
         res.status(500).json(error)
@@ -60,7 +60,7 @@ module.exports.project_developer_request = async (req, res) => {
     try {
         const { p_id, d_id } = {...req.body};
         const project = Project.findById(p_id);
-        const projecthistory = ProjectHistory.findById({ project_id: p_id });
+        // const projecthistory = ProjectHistory.findById({ project_id: p_id });
         project.requested.push(d_id)
         await project.save();
         res.status(200).json('Project Requested Successfully!')
@@ -74,13 +74,14 @@ module.exports.project_developer_request_rejected = async (req, res) => {
     try {
         const { p_id, d_id } = {...req.body};
         const project = Project.findById(p_id).populate('requested');
-        const projecthistory = ProjectHistory.findById({ project_id: p_id });
+        // const projecthistory = ProjectHistory.findById({ project_id: p_id });
         project.requested = project.requested.filter(item => item._id !== d_id);
         //user
         const user = await User.findById(d_id);
         user.notification = user.notification.push({
             p_id: project._id,
-            message: 'Provider Rejected Your Request'
+            message: 'Provider Rejected Your Request',
+            notify_type:0,
         });
         await user.save();
         await project.save();
@@ -124,7 +125,8 @@ module.exports.project_request_status = async (req, res) => {
             //provider notification
             provider.notification = provider.notification.push({
                 p_id: project._id,
-                message: 'User Accepted'
+                message: 'Developer Accepted',
+                notify_type:0,
             });
             // provider.onbord_project.push(project._id);
             await user.save();
@@ -143,7 +145,8 @@ module.exports.project_request_status = async (req, res) => {
             //provider notification
             provider.notification = provider.notification.push({
                 p_id: project._id,
-                message: 'User Rejected'
+                message: 'Developer Rejected',
+                notify_type:0,
             });
             await user.save();
             await provider.save();

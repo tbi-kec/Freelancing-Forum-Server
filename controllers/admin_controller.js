@@ -28,12 +28,14 @@ module.exports.admin_response = async (req, res) => {
             //user notification
             user.notification.push({
                 p_id: project._id,
-                message: `Assigned-${project.title}`
+                message: `Assigned-${project.title}`,
+                notify_type:1,
             });
             //provider notification
            provider.notification.push({
                 p_id: project._id,
-                message: `Accepted By Admin -${project.title}`
+                message: `Accepted By Admin -${project.title}`,
+                notify_type:0,
                 });
             user.save();
             provider.save();
@@ -49,7 +51,8 @@ module.exports.admin_response = async (req, res) => {
             const user = await User.findById(project.createdBy)
             user.notification.push({
                 p_id:project._id,
-                message:`Rejected-${project.title}`
+                message:`Rejected-${project.title}`,
+                notify_type:0,
             });
             user.save();
             //mail

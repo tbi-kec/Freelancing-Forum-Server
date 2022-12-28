@@ -50,7 +50,12 @@ module.exports.login = async (req, res) => {
 module.exports.get_user = async (req, res) => {
     try {
         const  {id}  = req.params;
-        const user = await User.findById(id).populate('work_history').populate('study_project').populate('projects_given').populate('onbord_project').populate('notification');
+        const user = await User.findById(id).populate('work_history').populate('study_project').populate('projects_given').populate('onbord_project').populate({
+            path: 'notification',
+            populate: {
+                path: 'p_id',      
+            }
+        });
         res.status(200).json(user)
     } catch (e) {
         res.status(500).json(e)
@@ -60,7 +65,12 @@ module.exports.get_user = async (req, res) => {
 
 module.exports.getAllUsers = async (req, res) => {
     try {
-        const users = await User.find({}).populate('work_history').populate('study_project').populate('projects_given').populate('onbord_project').populate('notification');
+        const users = await User.find({}).populate('work_history').populate('study_project').populate('projects_given').populate('onbord_project').populate({
+            path: 'notification',
+            populate: {
+                path: 'p_id',      
+            }
+        });
         res.status(200).json(users)
     } catch (error) {
     
@@ -88,8 +98,13 @@ module.exports.update_profile = async (req, res) => {
 module.exports.delete_notification = async (req, res) => {
     try {
         const { u_id, p_id } = { ...req.body };
-        const user = await User.findById(u_id).populate('notification');
-        user.notification = user.notification.filter(item => item.p_id !== p_id);
+        const user = await User.findById(u_id).populate({
+            path: 'notification',
+            populate: {
+                path: 'p_id',      
+            }
+        });
+        user.notification = user.notification.filter(item => item.p_id._id !== p_id);
         await user.save();
         res.status(200).json('Deleted  Successfully')
     } catch (e) {

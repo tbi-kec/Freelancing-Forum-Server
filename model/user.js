@@ -59,7 +59,8 @@ const userSchema = new Schema({
                 type: Schema.Types.ObjectId,
                 ref: "Project",
             },
-            message:String
+            message:String,
+            notify_type:Number
         }
     ],
     onbord_project: [{
