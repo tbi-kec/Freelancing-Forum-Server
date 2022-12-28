@@ -16,24 +16,25 @@ module.exports.requested_project = async (req, res) => {
 
 module.exports.admin_response = async (req, res) => {
     try {
-        const { status, p_id } = {...req.body};
+        const { status, p_id } = req.body
+        console.log(p_id,status)
         if (status == 'accepted') {
             const project = await Project.findByIdAndUpdate(p_id,{project_status:"pending-user"}).populate('createdBy').populate('developer')
            // const projecthistory = await ProjectHistory.find({ project_status: 'pending-user' }).populate('from')
-           
+           console.log(project);
             const user = await User.findById(project.developer._id)
             const provider=await User.findById(project.createdBy._id)
             
             //user notification
             user.notification.push({
                 p_id: project._id,
-                message: 'Assigned'
+                message: `Assigned-${project.title}`
             });
             //provider notification
            provider.notification.push({
                 p_id: project._id,
-                message: 'Accepted By Admin'
-            });
+                message: `Accepted By Admin -${project.title}`
+                });
             user.save();
             provider.save();
             project.save();
@@ -48,7 +49,7 @@ module.exports.admin_response = async (req, res) => {
             const user = await User.findById(project.createdBy)
             user.notification.push({
                 p_id:project._id,
-                message:'Rejected'
+                message:`Rejected-${project.title}`
             });
             user.save();
             //mail
