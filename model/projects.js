@@ -44,6 +44,12 @@ const projectSchema = new Schema({
     end_date:{
         type:Date
     },
+    accepted_on: {
+        type: Date,
+    },
+    completed_on: {
+        type: Date,
+    },
     created_on: {
         type: Date,
         default: Date.now,
