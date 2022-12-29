@@ -118,17 +118,22 @@ module.exports.project_request_status = async (req, res) => {
             const project =await  Project.findByIdAndUpdate(p_id, { project_status: 'assigned' }).populate('createdBy').populate("developer");
             //const projecthistory = ProjectHistory.findAndUpdate( p_id , { project_status: 'assigned' }).populate('from');
             const user = await User.findById(project.developer._id);
-            const provider =await User.findById(project.createdBy)
+            const provider =await User.findById(project.createdBy._id).populate({
+                path: 'notification',
+                populate: {
+                    path: 'p_id',      
+                }
+            });
             //user notification
-            user.notification = user.notification.filter(item => item.p_id !== p_id);
-            user.onbord_project.push(project._id);
+            user.notification = user.notification.filter(item => item.p_id._id !== p_id);
+            user.onbord_project.push(project);
             //provider notification
             provider.notification.push({
-                p_id: project._id,
+                p_id: project,
                 message: 'Developer Accepted',
                 notify_type:0,
             });
-            // provider.onbord_project.push(project._id);
+            provider.onbord_project.push(project);
             await user.save();
             await provider.save();
             await notify_user(project.createdBy.kongu_email, 'Your requested Project is Accepted By the User! Please check your project progress')
@@ -136,15 +141,20 @@ module.exports.project_request_status = async (req, res) => {
         }
         else {
             // mail
-            const project = Project.findByIdAndUpdate(p_id, { project_status: 'created', developer: '' }).populate('createdBy');
+            const project = Project.findByIdAndUpdate(p_id, { project_status: 'created', developer: '' }).populate('createdBy').populate("developer");
            // const projecthistory = ProjectHistory.findByIdAndUpdate( p_id , { project_status: 'created', to: '' });
-            const user = User.findById(project.developer);
-            const provider = User.findById(project.createdBy)
+            const user =await User.findById(project.developer._id);
+            const provider =await User.findById(project.createdBy._id).populate({
+                path: 'notification',
+                populate: {
+                    path: 'p_id',      
+                }
+            });
             //user notification
-            user.notification = user.notification.filter(item => item.p_id !== p_id);
+            user.notification = user.notification.filter(item => item.p_id._id !== p_id);
             //provider notification
-            provider.notification = provider.notification.push({
-                p_id: project._id,
+            provider.notification.push({
+                p_id: project,
                 message: 'Developer Rejected',
                 notify_type:0,
             });
