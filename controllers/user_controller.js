@@ -5,7 +5,6 @@ const Admin = require('../model/admin')
 const StudyProject = require('../model/studyProject')
 
 
-
 module.exports.signup = async (req, res) => {
     const { first_name, last_name, kongu_email, password, mobile } = { ...req.body }
 
@@ -78,7 +77,7 @@ module.exports.getAllUsers = async (req, res) => {
     }
 }
 module.exports.update_profile = async (req, res) => {
-    const id = req.body.id
+    const id = req.body
 
     try {
         const user = await User.findById(id)

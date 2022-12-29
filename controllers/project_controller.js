@@ -117,6 +117,7 @@ module.exports.project_request_status = async (req, res) => {
             // mail
             const project =await  Project.findByIdAndUpdate(p_id, { project_status: 'assigned',accepted_on: Date.now() }).populate('createdBy').populate("developer");
             //const projecthistory = ProjectHistory.findAndUpdate( p_id , { project_status: 'assigned' }).populate('from');
+            console.log(project)
             const user = await User.findById(project.developer._id);
             const provider =await User.findById(project.createdBy._id).populate({
                 path: 'notification',
