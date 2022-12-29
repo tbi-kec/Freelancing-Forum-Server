@@ -112,7 +112,7 @@ module.exports.project_request = async (req, res) => {
 module.exports.project_request_status = async (req, res) => {
    // console.log(...req.params)
     try {
-        const { status, p_id } = req.body;
+        const { status, p_id, n_id } = req.body;
         if (status == 'accepted') {
             // mail
             const project =await  Project.findByIdAndUpdate(p_id, { project_status: 'assigned' }).populate('createdBy').populate("developer");
@@ -125,7 +125,7 @@ module.exports.project_request_status = async (req, res) => {
                 }
             });
             //user notification
-            user.notification = user.notification.filter(item => item.p_id._id !== p_id);
+            user.notification.remove(n_id);
             user.onbord_project.push(project);
             //provider notification
             provider.notification.push({
@@ -151,7 +151,7 @@ module.exports.project_request_status = async (req, res) => {
                 }
             });
             //user notification
-            user.notification = user.notification.filter(item => item.p_id._id !== p_id);
+            user.notification.remove(n_id);
             //provider notification
             provider.notification.push({
                 p_id: project,
