@@ -98,16 +98,13 @@ module.exports.update_profile = async (req, res) => {
 module.exports.delete_notification = async (req, res) => {
     try {
         const { u_id, n_id } = req.body ;
-        const user = await User.findById(u_id).populate({
-            path: 'notification',
-            populate: {
-                path: 'p_id',      
-            }
-        });
+        console.log(req.body)
+        const user = await User.findById(u_id)
         await user.notification.remove(n_id);
         await user.save();
         res.status(200).json('Deleted  Successfully')
     } catch (e) {
+        console.log(e.message)
         res.status(500).json(e)
     }
 

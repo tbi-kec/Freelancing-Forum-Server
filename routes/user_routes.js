@@ -12,7 +12,7 @@ router.post('/signup',signup)
 router.post('/otp',otp_sendEmail)
 
 //notification dlelte
-router.delete('/notification/delete',delete_notification)
+router.post('/notification/delete',delete_notification)
 //forgotten_password
 router.post('/forgotten-password',change_password_request)
 

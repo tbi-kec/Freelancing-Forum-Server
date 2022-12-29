@@ -17,7 +17,7 @@ module.exports.getallproject = async (req, res) => {
 module.exports.newProject = async (req, res) => {
     try {
         const project = new Project({ ...req.body })
-        // const projecthistory = new ProjectHistory({ project_id: project._id, from: project.createdBy })
+        const projecthistory = new ProjectHistory({ project_id: project._id, from: project.createdBy })
         const user = await User.findById(project.createdBy)
         user.projects_given.push(project);
         await user.save();
