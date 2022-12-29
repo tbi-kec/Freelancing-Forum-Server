@@ -112,18 +112,18 @@ module.exports.project_request = async (req, res) => {
 module.exports.project_request_status = async (req, res) => {
    // console.log(...req.params)
     try {
-        const { status, p_id } = {...req.body};
+        const { status, p_id } = req.body;
         if (status == 'accepted') {
             // mail
-            const project = Project.findByIdAndUpdate(p_id, { project_status: 'assigned' }).populate('createdBy');
-            const projecthistory = ProjectHistory.findAndUpdate({ project_id: p_id }, { project_status: 'assigned' }).populate('from');
-            const user = User.findById(project.developer);
-            const provider = User.findById(project.createdBy)
+            const project =await  Project.findByIdAndUpdate(p_id, { project_status: 'assigned' }).populate('createdBy').populate("developer");
+            //const projecthistory = ProjectHistory.findAndUpdate( p_id , { project_status: 'assigned' }).populate('from');
+            const user = await User.findById(project.developer._id);
+            const provider =await User.findById(project.createdBy)
             //user notification
             user.notification = user.notification.filter(item => item.p_id !== p_id);
             user.onbord_project.push(project._id);
             //provider notification
-            provider.notification = provider.notification.push({
+            provider.notification.push({
                 p_id: project._id,
                 message: 'Developer Accepted',
                 notify_type:0,
@@ -137,7 +137,7 @@ module.exports.project_request_status = async (req, res) => {
         else {
             // mail
             const project = Project.findByIdAndUpdate(p_id, { project_status: 'created', developer: '' }).populate('createdBy');
-            const projecthistory = ProjectHistory.findAndUpdate({ project_id: p_id }, { project_status: 'created', to: '' });
+           // const projecthistory = ProjectHistory.findByIdAndUpdate( p_id , { project_status: 'created', to: '' });
             const user = User.findById(project.developer);
             const provider = User.findById(project.createdBy)
             //user notification
@@ -156,6 +156,7 @@ module.exports.project_request_status = async (req, res) => {
         }
 
     } catch (e) {
+        console.log(e.message)
         res.status(500).json(e)
     }
 }
