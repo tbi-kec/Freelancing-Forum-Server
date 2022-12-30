@@ -157,3 +157,13 @@ module.exports.updateskills = () => {
 
 
 
+module.exports.editProfile = async(req,res)=>{
+    const {id}=req.params
+    try {
+        const user = await User.findByIdAndUpdate(id,{...req.body});
+        await user.save();
+        res.status(200).json("Successfully Edited")
+    } catch (error) {
+        res.status(500).json(e)
+    }
+}
