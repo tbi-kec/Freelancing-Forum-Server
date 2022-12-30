@@ -41,6 +41,12 @@ const userSchema = new Schema({
         type:Number,
         default:0
     },
+    linkedin:{
+        type:String,
+    },
+    github:{
+        type:String,
+    },
     projects_given: [{
         type: Schema.Types.ObjectId,
         ref: "Project",
