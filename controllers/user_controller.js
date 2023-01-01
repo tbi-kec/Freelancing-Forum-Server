@@ -77,7 +77,7 @@ module.exports.getAllUsers = async (req, res) => {
     }
 }
 module.exports.update_profile = async (req, res) => {
-    const id = req.body
+    const {id} = req.body
 
     try {
         const user = await User.findById(id)
@@ -91,6 +91,7 @@ module.exports.update_profile = async (req, res) => {
     } catch (e) {
         res.status(500).json(e)
     }
+    
 
 }
 
