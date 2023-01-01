@@ -179,6 +179,7 @@ module.exports.updateProgress=async(req,res)=>{
     try{
         const status_list=['assigned','partial','completed']
         const { p_id,status } = req.body;
+        console.log(req.body);
         const project=await Project.findByIdAndUpdate(p_id,{project_status:status_list[status]});
         if(status_list[status]=='completed'){
             project.completed_on=Date.now();
@@ -186,6 +187,7 @@ module.exports.updateProgress=async(req,res)=>{
         await project.save();
         res.status(200).json('Progress Updated');
     }catch(e){
+        console.log(e.message)
         res.status(500).json(e)
     }
 }
