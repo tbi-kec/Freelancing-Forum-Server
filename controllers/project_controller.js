@@ -180,7 +180,7 @@ module.exports.project_request_status = async (req, res) => {
 //progress
 module.exports.updateProgress=async(req,res)=>{
     try{
-        const status_list=['assigned','partial','completed']
+        const status_list=['assigned','partial','testing','completed']
         const { p_id,status } = req.body;
         console.log(req.body);
         const project=await Project.findByIdAndUpdate(p_id,{project_status:status_list[status]});

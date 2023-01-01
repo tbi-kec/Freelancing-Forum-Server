@@ -8,14 +8,14 @@ const projectSchema = new Schema({
     description: {
         type: String,
     },
-    category:{
-        type:String,
+    category: {
+        type: String,
     },
     skills: [String],
     stipend: {
         type: Number,
     },
-    
+
     tasks: {
         type: [{
             title: String,
@@ -24,25 +24,25 @@ const projectSchema = new Schema({
             completed: Boolean
         }],
     },
-    developer:{
+    developer: {
         type: Schema.Types.ObjectId,
         ref: "User"
     },
-    requested:[{
+    requested: [{
         type: Schema.Types.ObjectId,
         ref: "User"
     }],
     project_status: {
         type: String,
-        enum: ['created', 'pending-admin', 'pending-user', 'assigned', 'partial', 'completed'],
+        enum: ['created', 'pending-admin', 'pending-user', 'assigned', 'partial', 'testing', 'completed'],
         default: 'created'
     },
     createdBy: {
         type: Schema.Types.ObjectId,
         ref: "User"
     },
-    end_date:{
-        type:Date
+    end_date: {
+        type: Date
     },
     accepted_on: {
         type: Date,

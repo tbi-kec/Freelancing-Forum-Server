@@ -49,7 +49,13 @@ module.exports.login = async (req, res) => {
 module.exports.get_user = async (req, res) => {
     try {
         const  {id}  = req.params;
-        const user = await User.findById(id).populate('work_history').populate('study_project').populate('projects_given').populate('onbord_project').populate({
+        const user = await User.findById(id).populate('work_history').populate('study_project').populate('projects_given').populate('onbord_project')
+        .populate({
+            path: 'projects_given',
+            populate: {
+                path: 'requested',      
+            }
+        }).populate({
             path: 'notification',
             populate: {
                 path: 'p_id',      
