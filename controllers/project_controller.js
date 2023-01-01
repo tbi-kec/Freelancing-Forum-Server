@@ -58,10 +58,10 @@ module.exports.project_developer_request = async (req, res) => {
     //console.log(...req.params)
     // p_id:project id   d_id:user id (developer)   
     try {
-        const { p_id, d_id } = {...req.body};
+        const { p_id, d_id } = req.body;
         const project = Project.findById(p_id);
         // const projecthistory = ProjectHistory.findById({ project_id: p_id });
-        project.requested.push(d_id)
+        await project.requested.push(d_id)
         await project.save();
         res.status(200).json('Project Requested Successfully!')
     } catch (e) {

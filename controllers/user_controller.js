@@ -85,7 +85,7 @@ module.exports.update_profile = async (req, res) => {
             res.status(404).json('User Not Found')
         }
         const updateduser = await User.findByIdAndUpdate(id, { ...req.body })
-        updateduser.save()
+        await updateduser.save()
         res.status(200).json('updated Successfully')
 
     } catch (e) {
