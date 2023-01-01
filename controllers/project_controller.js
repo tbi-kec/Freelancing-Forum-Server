@@ -59,11 +59,12 @@ module.exports.project_developer_request = async (req, res) => {
     // p_id:project id   d_id:user id (developer)   
     try {
         const { p_id, d_id } = req.body;
-        const project = await Project.findById(p_id);
+        const project = await Project.findById(p_id).populate('createdBy');
         // const projecthistory = ProjectHistory.findById({ project_id: p_id });
         const user = await User.findById(d_id);
         await project.requested.push(user)
         await project.save();
+        await notify_user(project.createdBy.kongu_email, `Your Project ${project.title} is Requested By ${user.first_name} ${user.last_name} .Please Look to your profile to respond to the request`);
         res.status(200).json('Project Requested Successfully!')
     } catch (e) {
         console.log(e.message)
