@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const User = require('../model/user')
+const Project = require('../model/projects')
 const Admin = require('../model/admin')
 const StudyProject = require('../model/studyProject')
+const { notify_both_user } = require('./mail')
 
 
 module.exports.signup = async (req, res) => {
@@ -48,19 +50,19 @@ module.exports.login = async (req, res) => {
 }
 module.exports.get_user = async (req, res) => {
     try {
-        const  {id}  = req.params;
+        const { id } = req.params;
         const user = await User.findById(id).populate('work_history').populate('study_project').populate('projects_given').populate('onbord_project')
-        .populate({
-            path: 'projects_given',
-            populate: {
-                path: 'requested',      
-            }
-        }).populate({
-            path: 'notification',
-            populate: {
-                path: 'p_id',      
-            }
-        });
+            .populate({
+                path: 'projects_given',
+                populate: {
+                    path: 'requested',
+                }
+            }).populate({
+                path: 'notification',
+                populate: {
+                    path: 'p_id',
+                }
+            });
         res.status(200).json(user)
     } catch (e) {
         res.status(500).json(e)
@@ -71,20 +73,20 @@ module.exports.get_user = async (req, res) => {
 module.exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find({}).populate('work_history').populate('study_project').populate('projects_given').populate('onbord_project')
-        .populate({
-            path: 'notification',
-            populate: {
-                path: 'p_id',      
-            }
-        });
+            .populate({
+                path: 'notification',
+                populate: {
+                    path: 'p_id',
+                }
+            });
         res.status(200).json(users)
     } catch (error) {
-    
+
         res.status(500).json(error)
     }
 }
 module.exports.update_profile = async (req, res) => {
-    const {id} = req.body
+    const { id } = req.body
 
     try {
         const user = await User.findById(id)
@@ -98,13 +100,13 @@ module.exports.update_profile = async (req, res) => {
     } catch (e) {
         res.status(500).json(e)
     }
-    
+
 
 }
 
 module.exports.delete_notification = async (req, res) => {
     try {
-        const { u_id, n_id } = req.body ;
+        const { u_id, n_id } = req.body;
         console.log(req.body)
         const user = await User.findById(u_id)
         await user.notification.remove(n_id);
@@ -120,7 +122,7 @@ module.exports.delete_notification = async (req, res) => {
 
 module.exports.getDomin_user = async (req, res) => {
     try {
-        const  domain_name  = req.body.domain_name;
+        const domain_name = req.body.domain_name;
         const users = await User.find({ domain: { $in: [domain_name] } });
         res.status(200).json(users);
     } catch (e) {
@@ -129,7 +131,7 @@ module.exports.getDomin_user = async (req, res) => {
 }
 module.exports.getDept_user = async (req, res) => {
     try {
-        const  dept_name  = req.body.dept_name;
+        const dept_name = req.body.dept_name;
         const users = await User.find({ department: { $in: [dept_name] } });
         res.status(200).json(users);
     } catch (e) {
@@ -163,12 +165,46 @@ module.exports.updateskills = () => {
 
 }
 
-
-
-module.exports.editProfile = async(req,res)=>{
-    const {id}=req.params
+module.exports.update_rating = async (req, res) => {
     try {
-        const user = await User.findByIdAndUpdate(id,{...req.body});
+        const { rating, u_id, p_id } = req.body;
+        const user = await User.findById(u_id);
+        const project = await Project.findById(p_id).populate('createdBy');
+        //user update
+        user.rating = user.work_history.length == 0 ? rating : (rating + user.rating) / (2);
+        user.work_history.push(project);
+        await user.onbord_project.remove(p_id)
+        user.notification.push({
+            p_id: project,
+            message: `Successfully Completed the Project with rating ${user.rating}`,
+            notify_type: 0,
+        });
+        // project update
+        project.completed_on = Date.now();
+        project.createdBy.notification.push({
+            p_id: project,
+            message: `Your Project is Completed`,
+            notify_type: 0,
+        });
+        project.project_status = 'completed';
+        await project.createdBy.onbord_project.remove(p_id)
+
+        await notify_both_user(user.kongu_email, `Successfully Completed the Project with rating ${user.rating}.Congratulations from Freelancer Forum Team.Give the feedback on kec_tbi2022.kongu.edu`,
+            project.createdBy.kongu_email, `Congratulation Your Project (${project.title}) is completed.Please Check your Profile.Give the feedback on kec_tbi2022.kongu.edu`)
+        await user.save();
+        await project.save();
+        res.status(200).json('Project Completed Successfully!')
+    } catch (e) {
+        res.status(500).json(e)
+    }
+
+}
+
+
+module.exports.editProfile = async (req, res) => {
+    const { id } = req.params
+    try {
+        const user = await User.findByIdAndUpdate(id, { ...req.body });
         await user.save();
         res.status(200).json("Successfully Edited")
     } catch (error) {
