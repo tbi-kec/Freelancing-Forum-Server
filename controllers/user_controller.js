@@ -77,7 +77,7 @@ module.exports.getAllUsers = async (req, res) => {
     }
 }
 module.exports.update_profile = async (req, res) => {
-    const id = req.body
+    const {id} = req.body
 
     try {
         const user = await User.findById(id)
@@ -85,12 +85,13 @@ module.exports.update_profile = async (req, res) => {
             res.status(404).json('User Not Found')
         }
         const updateduser = await User.findByIdAndUpdate(id, { ...req.body })
-        updateduser.save()
+        await updateduser.save()
         res.status(200).json('updated Successfully')
 
     } catch (e) {
         res.status(500).json(e)
     }
+    
 
 }
 
