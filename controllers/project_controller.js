@@ -6,7 +6,7 @@ const { notify_user, notify_both_user } = require('../controllers/mail')
 
 module.exports.getallproject = async (req, res) => {
     try {
-        const project = await Project.find({}).populate('createdBy').populate('requested');
+        const project = await Project.find({}).populate('createdBy').populate('requested').populate('developer');
         res.status(200).json(project)
     } catch (error) {
         console.log(error)
