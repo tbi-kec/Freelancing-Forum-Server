@@ -71,7 +71,6 @@ module.exports.get_user = async (req, res) => {
 
 module.exports.getAllUsers = async (req, res) => {
     try {
-        console.log("on all user")
         const users = await User.find({}).populate('work_history').populate('study_project').populate('projects_given').populate('onbord_project')
         .populate({
             path: 'notification',
