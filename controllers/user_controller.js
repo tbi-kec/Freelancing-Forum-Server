@@ -65,6 +65,7 @@ module.exports.get_user = async (req, res) => {
             });
         res.status(200).json(user)
     } catch (e) {
+        console.log(e.message)
         res.status(500).json(e)
     }
 
