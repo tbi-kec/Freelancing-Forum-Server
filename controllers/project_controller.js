@@ -183,7 +183,7 @@ module.exports.updateProgress=async(req,res)=>{
         if(status_list[status]=='completed'){
             project.completed_on=Date.now();
         }
-        project.save();
+        await project.save();
         res.status(200).json('Progress Updated');
     }catch(e){
         res.status(500).json(e)
