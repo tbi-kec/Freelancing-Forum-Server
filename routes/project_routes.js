@@ -17,7 +17,4 @@ router.post('/provider/request/status',project_request_status)
 router.post('/developer/request',project_developer_request)
 router.post('/developer/request/rejected',project_developer_request_rejected)
 
-//progress
-router.post('/update/progress',updateProgress)
-
 module.exports=router;
