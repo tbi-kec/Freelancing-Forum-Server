@@ -172,7 +172,7 @@ module.exports.update_rating = async (req, res) => {
         const user = await User.findById(u_id);
         const project = await Project.findById(p_id).populate('createdBy');
         //user update
-        user.rating = user.work_history.length == 0 ? rating : (rating + user.rating) / (2);
+        user.rating = user.work_history.length == 0 ? rating : (Number(rating) + Number(user.rating))/2.0 ;
         user.work_history.push(project);
         await user.onbord_project.remove(p_id)
         user.notification.push({
