@@ -18,7 +18,7 @@ module.exports.requested_project = async (req, res) => {
 module.exports.admin_response = async (req, res) => {
     try {
         const { status, p_id } = req.body
-        console.log(p_id,status)
+        // console.log(p_id,status)
         if (status == 'accepted') {
             const project = await Project.findByIdAndUpdate(p_id,{project_status:"pending-user"}).populate('createdBy').populate('developer')
            // const projecthistory = await ProjectHistory.find({ project_status: 'pending-user' }).populate('from')
@@ -49,15 +49,15 @@ module.exports.admin_response = async (req, res) => {
         else {
             const project = await Project.findByIdAndUpdate(p_id, { project_status: 'created', developer: null });
            // const projecthistory = await ProjectHistory.findAndUpdate({ project_id: p_id }, { project_status: 'created', to: '' });
-            const user = await User.findById(project.createdBy)
+            const user = await User.findById(project.createdBy._id)
             user.notification.push({
                 p_id:project._id,
                 message:`Rejected-${project.title}`,
                 notify_type:0,
             });
-            user.save();
+            await user.save();
             //mail
-            await notify_user( project.createdBy.kongu_email, 'Your requested Project is Rejected By the Admin')
+            // await notify_user( project.createdBy.kongu_email, 'Your requested Project is Rejected By the Admin')
             res.status(200).json('Project Rejected!')
         }
     } catch (e) {
