@@ -9,6 +9,19 @@ const userSchema = new Schema({
     last_name: {
         type: String,
     },
+    user_type:{
+        type:String,
+        required:true,
+        enum:['client','freelancer']
+    },
+    admin_verify:{
+        type:Boolean,
+        default:false,
+    },
+    rollno:{
+        type:String,
+        required:true
+    },
     kongu_email: {
         type: String,
         required: true,

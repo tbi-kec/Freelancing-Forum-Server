@@ -1,7 +1,11 @@
 
 Model design on 16/11/2022
+updated on 08/01/2023
 
 User:
+    user_type:String
+    admin_verify
+    roolno
     first name
     last name
     kongu email

@@ -8,7 +8,7 @@ const { notify_both_user } = require('./mail')
 
 
 module.exports.signup = async (req, res) => {
-    const { first_name, last_name, kongu_email, password, mobile } = { ...req.body }
+    const { first_name, last_name, kongu_email, password, mobile, rollno, user_type } = { ...req.body }
 
     try {
         const existinguser = await User.findOne({ kongu_email })
@@ -16,7 +16,7 @@ module.exports.signup = async (req, res) => {
             return res.status(400).json('User already found..')
         }
         const hashPassword = await bcrypt.hash(password, 12);
-        const newUser = new User({ first_name, last_name, kongu_email, password: hashPassword, mobile })
+        const newUser = new User({ first_name, last_name, kongu_email, rollno, user_type, password: hashPassword, mobile })
         await newUser.save();
         const token = jwt.sign({ email: newUser.kongu_email, id: newUser._id }, 'token', { expiresIn: '1h' })
         res.status(200).json({ user: newUser, token })
@@ -174,12 +174,12 @@ module.exports.update_rating = async (req, res) => {
         //user update
         console.log(user);
         console.log(rating);
-        if(user.rating==0){
+        if (user.rating == 0) {
             console.log("hii");
-            user.rating=rating;
+            user.rating = rating;
         }
-        else{
-            user.rating = (user.rating+rating)/2 ;
+        else {
+            user.rating = (user.rating + rating) / 2;
         }
         user.work_history.push(project);
         await user.onbord_project.remove(p_id)
