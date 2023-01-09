@@ -57,7 +57,7 @@ module.exports.admin_response = async (req, res) => {
             });
             await user.save();
             //mail
-            // await notify_user( project.createdBy.kongu_email, 'Your requested Project is Rejected By the Admin')
+            await notify_user( project.createdBy.kongu_email, 'Your requested Project is Rejected By the Admin')
             res.status(200).json('Project Rejected!')
         }
     } catch (e) {
@@ -65,4 +65,26 @@ module.exports.admin_response = async (req, res) => {
         res.status(500).json(e)
     }
 
+}
+
+
+//user verification
+
+module.exports.user_verify=async(req,res)=>{
+    try{
+        const {status,u_id}=req.body
+        if(status=="accepted"){
+            const user =await User.findById(u_id);
+            user.user_verify=true;
+            user.save()
+            res.status(200).json('User Verified Successfully')
+        }else{
+            const user=await User.remove({_id:u_id})
+            await notify_user( user.kongu_email, 'Your Profile verification is rejected by Admin')
+            res.status(200).json('User Rejected Successfully')
+        }
+    }catch(e){
+        console.log(e.message)
+        res.status(500).json(e)
+    }
 }
