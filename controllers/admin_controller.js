@@ -1,6 +1,8 @@
 const Project = require('../model/projects')
 const ProjectHistory = require('../model/projecthistory')
 const User = require('../model/user')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
 
 const { notify_user, notify_both_user } = require('../controllers/mail')
 const Admin = require('../model/admin')
@@ -11,7 +13,7 @@ module.exports.new_admin = async (req, res) => {
             if (existinguser) {
                 return res.status(400).json('Admin already found..')
             }
-            const hashPassword = await bcrypt.hash(password, 12);
+            const hashPassword = await bcrypt.hash(req.body.password, 12);
             const newAdmin = new Admin({ ...req.body, password: hashPassword})
             await newAdmin.save();
             const token = jwt.sign({ email: newAdmin.kongu_email, id: newAdmin._id }, 'token', { expiresIn: '1h' })

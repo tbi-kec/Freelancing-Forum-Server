@@ -21,6 +21,10 @@ const adminSchema = new Schema({
         type: String,
         required:true
     },
+    isAdmin:{
+        type:Boolean,
+        default:true
+    },
     // profile_image: {
     //     type: String,
     //     required: true
