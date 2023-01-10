@@ -72,15 +72,15 @@ module.exports.admin_response = async (req, res) => {
 
 module.exports.user_verify=async(req,res)=>{
     try{
-        const {status,u_id}=req.body
+        const {status,u_id,message}=req.body
         if(status=="accepted"){
             const user =await User.findById(u_id);
             user.user_verify=true;
             user.save()
             res.status(200).json('User Verified Successfully')
         }else{
-            const user=await User.remove({_id:u_id})
-            await notify_user( user.kongu_email, 'Your Profile verification is rejected by Admin')
+            const user=await User.findByIdAndDelete(u_id)
+            await notify_user( user.kongu_email, `Your Profile verification is rejected by Admin\nReason:${message}`)
             res.status(200).json('User Rejected Successfully')
         }
     }catch(e){
