@@ -17,7 +17,7 @@ module.exports.requested_project = async (req, res) => {
 
 module.exports.admin_response = async (req, res) => {
     try {
-        const { status, p_id } = req.body
+        const { status, p_id, message } = req.body
         // console.log(p_id,status)
         if (status == 'accepted') {
             const project = await Project.findByIdAndUpdate(p_id,{project_status:"pending-user"}).populate('createdBy').populate('developer')
@@ -57,7 +57,7 @@ module.exports.admin_response = async (req, res) => {
             });
             await user.save();
             //mail
-            await notify_user( project.createdBy.kongu_email, 'Your requested Project is Rejected By the Admin')
+            await notify_user( project.createdBy.kongu_email, `Your requested Project is Rejected By the Admin\nReason:${message}`)
             res.status(200).json('Project Rejected!')
         }
     } catch (e) {
@@ -77,6 +77,7 @@ module.exports.user_verify=async(req,res)=>{
             const user =await User.findById(u_id);
             user.user_verify=true;
             user.save()
+            await notify_user( user.kongu_email, `Your Profile verification is Approved by Admin`)
             res.status(200).json('User Verified Successfully')
         }else{
             const user=await User.findByIdAndDelete(u_id)
