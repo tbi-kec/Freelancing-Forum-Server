@@ -172,10 +172,7 @@ module.exports.update_rating = async (req, res) => {
         const user = await User.findById(u_id);
         const project = await Project.findById(p_id).populate('createdBy');
         //user update
-        console.log(user);
-        console.log(rating);
         if (user.rating == 0) {
-            console.log("hii");
             user.rating = rating;
         }
         else {
