@@ -75,8 +75,8 @@ module.exports.user_verify=async(req,res)=>{
         const {status,u_id,message}=req.body
         if(status=="accepted"){
             const user =await User.findById(u_id);
-            user.user_verify=true;
-            user.save()
+            user.admin_verify=true;
+            await user.save()
             await notify_user( user.kongu_email, `Your Profile verification is Approved by Admin`)
             res.status(200).json('User Verified Successfully')
         }else{
