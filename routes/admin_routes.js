@@ -2,6 +2,8 @@ const express=require('express')
 const router = express.Router();
 const {requested_project,admin_response, user_verify} = require('../controllers/admin_controller')
 
+
+router.post('/newadmin',new_admin)
 router.get('/requested_project',requested_project)
 router.post('/admin_response',admin_response)
 

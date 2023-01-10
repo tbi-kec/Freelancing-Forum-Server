@@ -21,10 +21,10 @@ const adminSchema = new Schema({
         type: String,
         required:true
     },
-    profile_image: {
-        type: String,
-        required: true
-    },
+    // profile_image: {
+    //     type: String,
+    //     required: true
+    // },
     created_on: {
         type: Date,
         default: Date.now,
