@@ -13,6 +13,7 @@ router.post('/otp',otp_sendEmail)
 
 //notification dlelte
 router.post('/notification/delete',delete_notification)
+
 //forgotten_password
 router.post('/forgotten-password',change_password_request)
 
