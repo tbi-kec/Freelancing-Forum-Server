@@ -34,7 +34,13 @@ const projectSchema = new Schema({
     }],
     project_status: {
         type: String,
-        enum: ['created', 'pending-admin', 'pending-user', 'assigned', 'partial', 'testing', 'completed'],
+        enum: ['created', 'pending-admin', 'pending-user  int gain = 0;
+            for(int i = 0; i < prices.length-1; i++){
+                if(prices[i+1]>prices[i]){
+                    gain += (prices[i+1]-prices[i]);
+                }
+            }
+            return gain;', 'assigned', 'partial', 'testing', 'completed'],
         default: 'created'
     },
     createdBy: {
