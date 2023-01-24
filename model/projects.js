@@ -15,7 +15,6 @@ const projectSchema = new Schema({
     stipend: {
         type: Number,
     },
-
     tasks: {
         type: [{
             title: String,
