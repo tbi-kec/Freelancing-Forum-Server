@@ -101,8 +101,9 @@ module.exports.user_verify=async(req,res)=>{
             await notify_user( user.kongu_email, `Your Profile verification is Approved by Admin`)
             res.status(200).json('User Verified Successfully')
         } else {
-            const user = await User.findByIdAndDelete(u_id)
-            const deleteduser=new DeletedUser({...user});
+            const user = await User.findByIdAndDelete(u_id);
+            const {first_name,last_name,rollno,kongu_email,personal_email,mobile,department,linkedin,github,created_on}=user
+            const deleteduser=new DeletedUser({first_name,last_name,rollno,kongu_email,personal_email,mobile,department,linkedin,github,created_on});
             deleteduser.rejected_on=Date.now();
             deleteduser.reason=message;
             await deleteduser.save()
@@ -114,3 +115,5 @@ module.exports.user_verify=async(req,res)=>{
         res.status(500).json(e)
     }
 }
+
+ 
