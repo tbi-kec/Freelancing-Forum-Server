@@ -79,6 +79,7 @@ module.exports.project_developer_request_rejected = async (req, res) => {
         const project = Project.findById(p_id).populate('requested');
         // const projecthistory = ProjectHistory.findById({ project_id: p_id });
         project.requested = project.requested.filter(item => item._id !== d_id);
+        project.admin_acceptedOn="";
         //user
         const user = await User.findById(d_id);
         user.notification = user.notification.push({

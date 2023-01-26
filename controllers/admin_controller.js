@@ -1,6 +1,7 @@
 const Project = require('../model/projects')
 const ProjectHistory = require('../model/projecthistory')
 const User = require('../model/user')
+const DeletedUser =require('../model/deletedUser')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
@@ -40,7 +41,7 @@ module.exports.admin_response = async (req, res) => {
         const { status, p_id, message } = req.body
         // console.log(p_id,status)
         if (status == 'accepted') {
-            const project = await Project.findByIdAndUpdate(p_id, { project_status: "pending-user" }).populate('createdBy').populate('developer')
+            const project = await Project.findByIdAndUpdate(p_id, { project_status: "pending-user",admin_acceptedOn:Date.now() }).populate('createdBy').populate('developer')
             // const projecthistory = await ProjectHistory.find({ project_status: 'pending-user' }).populate('from')
             console.log(project);
             const user = await User.findById(project.developer._id)
@@ -101,10 +102,14 @@ module.exports.user_verify=async(req,res)=>{
             res.status(200).json('User Verified Successfully')
         } else {
             const user = await User.findByIdAndDelete(u_id)
+            const deleteduser=new DeletedUser({...user});
+            deleteduser.rejected_on=Date.now();
+            deleteduser.reason=message;
+            await deleteduser.save()
             await notify_user(user.kongu_email, `Your Profile verification is rejected by Admin\nReason:${message}`)
             res.status(200).json('User Rejected Successfully')
         }
-    } catch (e) {
+    } catch (e) {   
         console.log(e.message)
         res.status(500).json(e)
     }

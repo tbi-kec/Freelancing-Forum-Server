@@ -2,8 +2,14 @@ const Constant = require('../model/constant')
 
 
 module.exports.getdomain = async (req, res) => {
-    const result = await Constant.find({});
-    res.status(200).json(result)
+    try{
+        const result = await Constant.find({});
+        res.status(200).json(result)
+    }catch(e){
+        console.log(e.message)
+        res.status(500).json(e)
+    }
+    
 }
 
 module.exports.upload = async (req, res) => {
@@ -84,7 +90,13 @@ module.exports.upload = async (req, res) => {
 
         ]
     }
-    const result = await new Constant(data);
-    await result.save();
-    res.status(200).json(result)
+    try {
+        const result = new Constant(data);
+        await result.save();
+        res.status(200).json(result)
+    } catch (e) {
+        console.log(e.message)
+        res.status(500).json(e)
+    }
+
 }
