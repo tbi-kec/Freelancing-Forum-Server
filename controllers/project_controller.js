@@ -116,7 +116,7 @@ module.exports.project_request = async (req, res) => {
 module.exports.project_request_status = async (req, res) => {
     // console.log(...req.params)
     try {
-        const { status, p_id, n_id } = req.body;
+        const { status, p_id, n_id } = req.body; //p_id=>project id  n_id=>notification id
         if (status == 'accepted') {
             // mail
             const project = await Project.findByIdAndUpdate(p_id, { project_status: 'assigned', accepted_on: Date.now() }).populate('createdBy').populate("developer");
@@ -146,7 +146,7 @@ module.exports.project_request_status = async (req, res) => {
         }
         else {
             // mail
-            const project = Project.findByIdAndUpdate(p_id, { project_status: 'created', developer: '' }).populate('createdBy').populate("developer");
+            const project =await Project.findByIdAndUpdate(p_id, { project_status: 'created', developer: '' }).populate('createdBy').populate("developer");
             // const projecthistory = ProjectHistory.findByIdAndUpdate( p_id , { project_status: 'created', to: '' });
             const user = await User.findById(project.developer._id);
             const provider = await User.findById(project.createdBy._id).populate({
