@@ -68,7 +68,7 @@ module.exports.admin_response = async (req, res) => {
             res.status(200).json('Accepted!')
         }
         else {
-            const project = await Project.findByIdAndUpdate(p_id, { project_status: 'created', developer: null });
+            const project = await Project.findByIdAndUpdate(p_id, { project_status: 'created', developer: null }).populate('createdBy');
             // const projecthistory = await ProjectHistory.findAndUpdate({ project_id: p_id }, { project_status: 'created', to: '' });
             const user = await User.findById(project.createdBy._id)
             user.notification.push({
