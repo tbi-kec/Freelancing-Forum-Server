@@ -146,9 +146,11 @@ module.exports.project_request_status = async (req, res) => {
         }
         else {
             // mail
-            const project = Project.findByIdAndUpdate(p_id, { project_status: 'created', developer: '' }).populate('createdBy').populate("developer");
+            const project =await  Project.findByIdAndUpdate(p_id, { project_status: 'created' }).populate('createdBy').populate("developer");
             // const projecthistory = ProjectHistory.findByIdAndUpdate( p_id , { project_status: 'created', to: '' });
             const user = await User.findById(project.developer._id);
+            project.developer=null;
+            await project.save();
             const provider = await User.findById(project.createdBy._id).populate({
                 path: 'notification',
                 populate: {
