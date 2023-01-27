@@ -27,7 +27,6 @@ const deletedUserSchema = new Schema({
     kongu_email: {
         type: String,
         required: true,
-        unique: true
     },
     personal_email: {
         type: String,
