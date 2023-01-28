@@ -52,7 +52,7 @@ module.exports.admin_response = async (req, res) => {
                 p_id: project._id,
                 message: `You(${user.first_name}) Requested for a project(${project.title}) by ${provider.first_name}.`,
                 notify_type: 1,
-                notify_from:"Admin"
+                notify_from:`${provider.first_name}`
             });
             //provider notification
             provider.notification.push({

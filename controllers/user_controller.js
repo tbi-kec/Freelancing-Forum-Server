@@ -79,6 +79,11 @@ module.exports.getAllUsers = async (req, res) => {
                 populate: {
                     path: 'p_id',
                 }
+            }).populate({
+                path: 'work_history',
+                populate: {
+                    path: 'createdBy',
+                }
             });
         res.status(200).json(users)
     } catch (error) {

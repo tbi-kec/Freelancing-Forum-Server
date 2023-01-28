@@ -189,9 +189,16 @@ module.exports.updateProgress = async (req, res) => {
         const status_list = ['assigned', 'partial', 'testing', 'completed']
         const { p_id, status } = req.body;
         console.log(req.body);
-        const project = await Project.findByIdAndUpdate(p_id, { project_status: status_list[status] });
+        const project = await Project.findByIdAndUpdate(p_id, { project_status: status_list[status] }).populate('createdBy').populate('developer');
+        const client=await User.findById(project.createdBy._id).populate('onbord_project');
+        const developer=await User.findById(project.developer._id).populate('onbord_project').populate('work_history');
         if (status_list[status] == 'completed') {
             project.completed_on = Date.now();
+           client.onbord_project= client.onbord_project.remove(p_id);
+           developer.onbord_project= developer.onbord_project.remove(p_id);
+           developer.work_history.push(project);
+           await client.save();
+           await developer.save();   
         }
         await project.save();
         res.status(200).json('Progress Updated');

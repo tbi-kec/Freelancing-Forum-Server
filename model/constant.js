@@ -6,10 +6,7 @@ const constantSchema = new Schema({
     domain:[String],
     dept_short:[{
         dept:String,
-        short:String
-    }],
-    icons:[{
-        dept:String,
+        short:String,
         icon:String
     }],
 });

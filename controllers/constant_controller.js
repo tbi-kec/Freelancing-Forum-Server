@@ -38,125 +38,87 @@ module.exports.upload = async (req, res) => {
         dept_short: [
             {
                 dept: 'Civil Engineering',
-                short: 'CIVIL'
+                short: 'CIVIL',
+                icon: 'Apartment',
             },
             {
                 dept: 'Mechanical Engineering',
-                short: 'MECH'
+                short: 'MECH',
+                icon: 'Engineering',
             },
             {
                 dept: 'Mechatronics Engineering',
-                short: 'MTR'
+                short: 'MTR',
+                icon: 'Construction',
             },
             {
                 dept: 'Automobile Engineering',
-                short: 'AUB'
+                short: 'AUB',
+                icon: 'Directions Car'
             },
             {
                 dept: 'Chemical Engineering',
-                short: 'CHEM'
+                short: 'CHEM',
+                icon: 'Science',
             },
             {
                 dept: 'Food Technology',
-                short: 'FT'
+                short: 'FT',
+                icon: 'Restaurant Menu',
             },
             {
                 dept: 'Electrical and Electronics Engineering',
-                short: 'EEE'
+                short: 'EEE',
+                icon: 'Bolt'
             },
             {
                 dept: 'Electronics and Instrumentation Engineering',
-                short: 'EIE'
+                short: 'EIE',
+                icon: 'Precision Manufacturing',
             },
             {
                 dept: 'Electronics and Communication Engineering',
-                short: 'ECE'
+                short: 'ECE',
+                icon: 'Satellite Alt',
             },
             {
                 dept: 'Computer Science and Engineering',
-                short: 'CSE'
+                short: 'CSE',
+                icon: 'Computer'
             },
             {
                 dept: 'Information Technology',
-                short: 'IT'
+                short: 'IT',
+                icon: 'Desktop Mac'
             },
             {
                 dept: 'Computer Science and Design',
-                short: 'CSD'
+                short: 'CSD',
+                icon: 'Podcasts',
             },
             {
                 dept: 'Artificial Intelligence (AIML & AIDS)',
-                short: 'AIML & AIDS'
+                short: 'AIML & AIDS',
+                icon: 'Robot',
             },
             {
                 dept: 'Management Studies',
-                short: 'MBA'
+                short: 'MBA',
+                icon: 'Auto Stories',
             },
             {
                 dept: 'Computer Technology - UG',
-                short: 'CT-UG'
+                short: 'CT-UG',
+                icon: 'Dvr',
             },
             {
                 dept: 'Computer Technology - PG',
-                short: 'CT-PG'
+                short: 'CT-PG',
+                icon: 'Dvr',
             }
 
 
         ],
-        icons: [
-            {
-                dept: "MECH",
-                icon: "Engineering",
-            },
-            {
-                dept: "IT",
-                icon: "Desktop Mac",
-            },
-            {
-                dept: "EIE",
-                icon: "Precision Manufacturing",
-            },
-            {
-                dept: "CSE",
-                icon: "Computer",
-            },
-            {
-                dept: "EEE",
-                icon: "Bolt",
-            },
-            {
-                dept: "AUB",
-                icon: "Directions Car"
-            },
-            {
-                dept: "FT",
-                icon: "Restaurant Menu",
-            },
-            {
-                dept: "CIVIL",
-                icon: "Apartment",
-            },
-            {
-                dept: "AIML & AIDS",
-                icon: "Robot",
-            },
-            {
-                dept: "CHEM",
-                icon: "Science",
-            },
-            {
-                dept: "MTR",
-                icon: "Construction",
-            },
-            {
-                dept: "ECE",
-                icon: "Satellite Alt",
-            },
-            {
-                dept: "CSD",
-                icon: "Podcasts",
-            },
-        ]
     }
     try {
         const result = new Constant(data);
