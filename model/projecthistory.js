@@ -22,7 +22,7 @@ const projecthistorySchema = new Schema({
     },
     project_status: {
         type: String,
-        enum: ['created', 'pending-admin', 'pending-user', 'assigned', 'partial', 'completed'],
+        enum: ['created', 'pending-admin', 'pending-user', 'assigned', 'partial', 'testing', 'completed'],
         default: 'created'
     },
 });
