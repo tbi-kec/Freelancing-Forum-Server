@@ -9,17 +9,16 @@ const { notify_user, notify_both_user } = require('../controllers/mail')
 const Admin = require('../model/admin')
 
 module.exports.new_admin = async (req, res) => {
-    const { first_name, last_name, kongu_email, password, mobile_number } = { ...req.body }
+    const { first_name, last_name, kongu_email, password, mobile_number } = req.body 
         try {
-            const existinguser = await Admin.findOne({ kongu_email: req.body.kongu_email })
+            const existinguser = await Admin.findOne({ kongu_email: kongu_email })
             if (existinguser) {
                 return res.status(400).json('Admin already found..')
             }
-            const hashPassword = await bcrypt.hash(req.body.password, 12);
+            const hashPassword = await bcrypt.hash(password, 12);
             const newAdmin = new Admin({ first_name, last_name, kongu_email,  mobile_number , password: hashPassword})
             await newAdmin.save();
-            const token = jwt.sign({ email: newAdmin.kongu_email, id: newAdmin._id }, 'token', { expiresIn: '1h' })
-            res.status(200).json({ user: newAdmin, token })
+            res.status(200).json("Created Admin successfully")
         } catch (err) {
             console.log(err.message)
             res.status(500).json('Something went worng...')
