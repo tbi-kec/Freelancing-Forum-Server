@@ -2,7 +2,7 @@ const express=require('express')
 const router = express.Router();
 
 
-const {getallproject,updateProgress,newProject,editProject,deleteProject,project_request,project_request_status,project_developer_request, project_developer_request_rejected} = require('../controllers/project_controller')
+const {getallproject,updateProgress,newProject,editProject,deleteProject,project_request,project_request_status,project_developer_request, project_developer_request_rejected, updatedrive} = require('../controllers/project_controller')
 
 router.get('/all',getallproject)
 router.post('/',newProject)
@@ -19,5 +19,6 @@ router.post('/developer/request/rejected',project_developer_request_rejected)
 
 //progress
 router.post('/update/progress',updateProgress)
+router.post('/update/drivelink',updatedrive)
 
 module.exports=router;

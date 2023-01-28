@@ -211,3 +211,15 @@ module.exports.updateProgress = async (req, res) => {
         res.status(500).json(e)
     }
 }
+
+module.exports.updatedrive=async(req,res)=>{
+    try {
+        const {drive_link,amount,p_id}=req.body;
+    const project=await Project.findByIdAndUpdate(p_id,{drive_link,stipend:amount});
+    await project.save();
+    res.status(200).json("Success")
+    } catch (e) {
+        console.log(e.message)
+        res.status(500).json(e)
+    }
+}
