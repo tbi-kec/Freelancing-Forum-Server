@@ -75,8 +75,8 @@ module.exports.project_developer_request_rejected = async (req, res) => {
     //console.log(...req.params)
     // p_id:project id   d_id:developer id   
     try {
-        const { p_id, d_id } = { ...req.body };
-        const project = Project.findById(p_id).populate('requested');
+        const { p_id, d_id,message } = { ...req.body };
+        const project = Project.findById(p_id).populate('requested').populate('createdBy');
         // const projecthistory = ProjectHistory.findById({ project_id: p_id });
         project.requested = project.requested.filter(item => item._id !== d_id);
         project.admin_acceptedOn = "";
@@ -84,12 +84,13 @@ module.exports.project_developer_request_rejected = async (req, res) => {
         const user = await User.findById(d_id);
         user.notification = user.notification.push({
             p_id: project._id,
-            message: 'Provider Rejected Your Request',
+            message: `Client Rejected Your Request,beacuse "${message}"`,
             notify_type: 0,
+            notify_from:project.createdBy.first_name+" "+project.createdBy.last_name
         });
         await user.save();
         await project.save();
-        res.status(200).json('Project Requested Successfully!')
+        res.status(200).json('Freelancer Rejected!')
     } catch (e) {
         res.status(500).json(e)
     }
@@ -116,7 +117,7 @@ module.exports.project_request = async (req, res) => {
 module.exports.project_request_status = async (req, res) => {
     // console.log(...req.params)
     try {
-        const { status, p_id, n_id } = req.body;
+        const { status, p_id, n_id, message } = req.body; //p_id=>project id  n_id=>notification id
         if (status == 'accepted') {
             // mail
             const project = await Project.findByIdAndUpdate(p_id, { project_status: 'assigned', accepted_on: Date.now() }).populate('createdBy').populate("developer");
@@ -135,8 +136,9 @@ module.exports.project_request_status = async (req, res) => {
             //provider notification
             provider.notification.push({
                 p_id: project,
-                message: 'Developer Accepted',
+                message: `Your Project(${project.title}) is Assigned to ${user.first_name}`,
                 notify_type: 0,
+                notify_from:user.first_name+" "+user.last_name
             });
             provider.onbord_project.push(project);
             await user.save();
@@ -162,8 +164,9 @@ module.exports.project_request_status = async (req, res) => {
             //provider notification
             provider.notification.push({
                 p_id: project,
-                message: 'Developer Rejected',
+                message: `Your Project(${project.title}) Request is rejected by ${user.first_name},because "${message}"`,
                 notify_type: 0,
+                notify_from:user.first_name+" "+user.last_name
             });
             await user.save();
             await provider.save();

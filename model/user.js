@@ -80,7 +80,12 @@ const userSchema = new Schema({
                 ref: "Project",
             },
             message:String,
-            notify_type:Number
+            notify_type:Number,
+            notify_from:String,
+            created_on: {
+                type: Date,
+                default: Date.now,
+            }
         }
     ],
     onbord_project: [{

@@ -2,24 +2,38 @@ const Constant = require('../model/constant')
 
 
 module.exports.getdomain = async (req, res) => {
-    try{
+    try {
         const result = await Constant.find({});
         res.status(200).json(result)
-    }catch(e){
+    } catch (e) {
         console.log(e.message)
         res.status(500).json(e)
     }
-    
+
 }
 
 module.exports.upload = async (req, res) => {
     const data = {
         domain: [
-            "Web Developer",
-            "App Developer",
-            "Full Stack Developer",
-            "Flutter Developer",
-            "React Native Developer",
+            "Mechanical CAD",
+            "3D printing and design",
+            "Mechanical Fabrication work",
+            "IoT",
+            "Circuit design and fabrication",
+            "Electrical works",
+            "Embedded Systems Simulation and Fabrication",
+            "Application creation using python",
+            "Web page design and hosting",
+            "Programming Skills (eg:. C, C#, python, etc)",
+            "Report Writing (From event registration to Certificate Writing)",
+            "Multimedial Preparation (Videos Preparation, Promos)",
+            "Poster Designing (Poster, Banner, Certificate Design)",
+            "Photography (Photos, Videos and Documentations)",
+            "Android Application Development",
+            "Mobile Application Development using Flutter",
+            "Building Machine Learning/Deep Learning model",
+            "UI/UX designing",
+            "Full Stack Development"
         ],
         dept_short: [
             {
@@ -88,6 +102,60 @@ module.exports.upload = async (req, res) => {
             }
 
 
+        ],
+        icons: [
+            {
+                dept: "MECH",
+                icon: "Engineering",
+            },
+            {
+                dept: "IT",
+                icon: "Desktop Mac",
+            },
+            {
+                dept: "EIE",
+                icon: "Precision Manufacturing",
+            },
+            {
+                dept: "CSE",
+                icon: "Computer",
+            },
+            {
+                dept: "EEE",
+                icon: "Bolt",
+            },
+            {
+                dept: "AUB",
+                icon: "Directions Car"
+            },
+            {
+                dept: "FT",
+                icon: "Restaurant Menu",
+            },
+            {
+                dept: "CIVIL",
+                icon: "Apartment",
+            },
+            {
+                dept: "AIML & AIDS",
+                icon: "Robot",
+            },
+            {
+                dept: "CHEM",
+                icon: "Science",
+            },
+            {
+                dept: "MTR",
+                icon: "Construction",
+            },
+            {
+                dept: "ECE",
+                icon: "Satellite Alt",
+            },
+            {
+                dept: "CSD",
+                icon: "Podcasts",
+            },
         ]
     }
     try {

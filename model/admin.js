@@ -29,6 +29,21 @@ const adminSchema = new Schema({
     //     type: String,
     //     required: true
     // },
+     notification:[
+        {
+            p_id:{
+                type: Schema.Types.ObjectId,
+                ref: "Project",
+            },
+            message:String,
+            notify_type:Number,
+            notify_from:String,
+            created_on: {
+                type: Date,
+                default: Date.now,
+            }
+        }
+    ],
     created_on: {
         type: Date,
         default: Date.now,

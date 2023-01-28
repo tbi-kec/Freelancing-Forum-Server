@@ -50,14 +50,16 @@ module.exports.admin_response = async (req, res) => {
             //user notification
             user.notification.push({
                 p_id: project._id,
-                message: `Assigned-${project.title}`,
+                message: `You(${user.first_name}) Requested for a project(${project.title}) by ${provider.first_name}.`,
                 notify_type: 1,
+                notify_from:"Admin"
             });
             //provider notification
             provider.notification.push({
                 p_id: project._id,
-                message: `Accepted By Admin -${project.title}`,
+                message: `Your Project(${project.title}) requested to ${user.first_name} is Accepted by Admin,waiting for freelancer response.`,
                 notify_type: 0,
+                notify_from:"Admin"
             });
             user.save();
             provider.save();
@@ -73,8 +75,9 @@ module.exports.admin_response = async (req, res) => {
             const user = await User.findById(project.createdBy._id)
             user.notification.push({
                 p_id: project._id,
-                message: `Rejected-${project.title}`,
+                message: `Your Project(${project.title}) requested to ${user.first_name} is Rejected by Admin,because "${message}"`,
                 notify_type: 0,
+                notify_from:"Admin"
             });
             await user.save();
             //mail
