@@ -7,7 +7,11 @@ const constantSchema = new Schema({
     dept_short:[{
         dept:String,
         short:String
-    }]
+    }],
+    icons:[{
+        dept:String,
+        icon:String
+    }],
 });
 
 
