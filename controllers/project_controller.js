@@ -3,6 +3,7 @@ const ProjectHistory = require('../model/projecthistory')
 const User = require('../model/user')
 
 const { notify_user, notify_both_user } = require('../controllers/mail')
+const { verify } = require('jsonwebtoken')
 
 module.exports.getallproject = async (req, res) => {
     try {
@@ -186,7 +187,7 @@ module.exports.project_request_status = async (req, res) => {
 //progress
 module.exports.updateProgress = async (req, res) => {
     try {
-        const status_list = ['assigned', 'partial', 'testing', 'completed']
+        const status_list = ['assigned', 'partial', 'testing','verify', 'completed']
         const { p_id, status } = req.body;
         console.log(req.body);
         const project = await Project.findByIdAndUpdate(p_id, { project_status: status_list[status] }).populate('createdBy').populate('developer');
@@ -199,6 +200,9 @@ module.exports.updateProgress = async (req, res) => {
            developer.work_history.push(project);
            await client.save();
            await developer.save();   
+        }
+        if(status_list[status] == 'verify'){
+            project.verify_on = Date.now();
         }
         await project.save();
         res.status(200).json('Progress Updated');

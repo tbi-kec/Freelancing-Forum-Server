@@ -33,14 +33,17 @@ const projectSchema = new Schema({
     }],
     project_status: {
         type: String,
-        enum: ['created', 'pending-admin', 'pending-user', 'assigned', 'partial', 'testing', 'completed'],
+        enum: ['created', 'pending-admin', 'pending-user', 'assigned', 'partial', 'testing', 'verify', 'completed'],
         default: 'created'
     },
     createdBy: {
         type: Schema.Types.ObjectId,
         ref: "User"
     },
-    admin_requestedOn:{
+    admin_requestedOn: {
+        type: Date
+    },
+    verify_on:{
         type:Date
     },
     admin_acceptedOn: {
