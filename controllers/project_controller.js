@@ -86,7 +86,7 @@ module.exports.project_developer_request_rejected = async (req, res) => {
     //console.log(...req.params)
     // p_id:project id   d_id:developer id   
     try {
-        const { p_id, d_id, message } = { ...req.body };
+        const { p_id, d_id } = { ...req.body };
         const project = Project.findById(p_id).populate('requested').populate('createdBy');
         // const projecthistory = ProjectHistory.findById({ project_id: p_id });
         project.requested = project.requested.filter(item => item._id !== d_id);
@@ -95,7 +95,7 @@ module.exports.project_developer_request_rejected = async (req, res) => {
         const user = await User.findById(d_id);
         user.notification = user.notification.push({
             p_id: project._id,
-            message: `Client Rejected Your Request,beacuse "${message}"`,
+            message: `Client Rejected Your Request for the project ${project.title}`,
             notify_type: 0,
             notify_from: project.createdBy.first_name + " " + project.createdBy.last_name
         });
