@@ -223,6 +223,7 @@ module.exports.updateProgress = async (req, res) => {
         if (status_list[status] == 'completed') {
             const certificate = new Certificate({project:project,certificate_no:uuid()});
             await certificate.save();
+            console.log(certificate);
             project.completed_on = Date.now();
             client.onbord_project = client.onbord_project.remove(p_id);
             developer.onbord_project = developer.onbord_project.remove(p_id);

@@ -33,7 +33,7 @@ const projectSchema = new Schema({
     }],
     project_status: {
         type: String,
-        enum: ['created', 'pending-admin', 'pending-user', 'assigned', 'partial', 'testing', 'verify', 'completed'],
+        enum: ['created', 'pending-admin', 'pending-user', 'assigned', 'partial', 'testing', 'completed'],
         default: 'created'
     },
     createdBy: {
