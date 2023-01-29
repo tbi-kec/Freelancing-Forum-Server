@@ -12,6 +12,7 @@ const adminRoutes = require('./routes/admin_routes')
 const projectRoutes = require('./routes/project_routes')
 const studyProjectRoutes = require('./routes/study_project_routes');
 const constantsRoutes = require('./routes/constants_routes')
+const certificateRoutes = require('./routes/certificate_routes')
 const { constants } = require('buffer');
 
 //initilizing
@@ -34,6 +35,7 @@ mongoose.connect(process.env.DB).then(() => {
 
 app.use('/user', userRoutes)
 app.use('/admin', adminRoutes)
+app.use('/certificate', certificateRoutes)
 app.use('/project', projectRoutes)
 app.use('/study',studyProjectRoutes)
 app.use('/constants',constantsRoutes)
