@@ -24,7 +24,7 @@ module.exports.otp_sendEmail = async (req, res) => {
   let info = await transporter.sendMail({
     // sender address
 
-    from: "projectkec2024@gmail.com",
+    from: "freelancer@kongu.edu",
     to: kongu_email, // list of receivers
     subject: "KEC | TBI FreeLancer Foreum", // Subject line
     text: "KEC | TBI FreeLancer Foreum", // plain text body
@@ -62,7 +62,7 @@ module.exports.resetpassword_sendEmail= async(user_mail,message,link)=> {
   let info = await transporter.sendMail({
    // sender address
   
-    from: "projectkec2024@gmail.com",
+    from: "freelancer@kongu.edu",
     to: user_mail, // list of receivers
     subject: "KEC | TBI FreeLancer Foreum", // Subject line
     text: message, // plain text body
@@ -100,7 +100,7 @@ module.exports.notify_user= async(user_mail,message)=> {
   let info = await transporter.sendMail({
    // sender address
   
-    from: "projectkec2024@gmail.com",
+    from: "freelancer@kongu.edu",
     to: user_mail, // list of receivers
     subject: "KEC | TBI FreeLancer Foreum", // Subject line
     text: message, // plain text body
@@ -138,7 +138,7 @@ module.exports.notify_both_user= async(user_mail,user_message,provider_mail,prov
   let info1 = await transporter.sendMail({
    // sender address
   
-    from: "projectkec2024@gmail.com",
+    from: "freelancer@kongu.edu",
     to: user_mail, // list of receivers
     subject: "KEC | TBI FreeLancer Foreum", // Subject line
     text: user_message, // plain text body
@@ -148,7 +148,7 @@ module.exports.notify_both_user= async(user_mail,user_message,provider_mail,prov
    let info = await transporter.sendMail({
     // sender address
    
-     from: "projectkec2024@gmail.com",
+     from: "freelancer@kongu.edu",
      to: provider_mail, // list of receivers
      subject: "KEC | TBI FreeLancer Foreum", // Subject line
      text: provider_message, // plain text body
