@@ -87,13 +87,13 @@ module.exports.project_developer_request_rejected = async (req, res) => {
     // p_id:project id   d_id:developer id   
     try {
         const { p_id, d_id } = { ...req.body };
-        const project = Project.findById(p_id).populate('requested').populate('createdBy');
+        const project =await Project.findById(p_id).populate('requested').populate('createdBy');
         // const projecthistory = ProjectHistory.findById({ project_id: p_id });
-        project.requested = project.requested.filter(item => item._id !== d_id);
+        project.requested = project.requested.remove(d_id);
         project.admin_acceptedOn = "";
         //user
         const user = await User.findById(d_id);
-        user.notification = user.notification.push({
+        user.notification.push({
             p_id: project._id,
             message: `Client Rejected Your Request for the project ${project.title}`,
             notify_type: 0,
@@ -103,6 +103,7 @@ module.exports.project_developer_request_rejected = async (req, res) => {
         await project.save();
         res.status(200).json('Freelancer Rejected!')
     } catch (e) {
+        console.log(e.message);
         res.status(500).json(e)
     }
 }
