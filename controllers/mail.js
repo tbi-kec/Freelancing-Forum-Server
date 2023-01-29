@@ -16,7 +16,7 @@ module.exports.otp_sendEmail = async (req, res) => {
       secure: false, // true for 465, false for other ports
       service: "Gmail",
       auth: {
-        user: process.env.USER, // generated ethereal user
+        user: process.env.EMAIL, // generated ethereal user
         pass: process.env.PASS, // generated ethereal password
       },
     });
@@ -59,7 +59,7 @@ module.exports.resetpassword_sendEmail = async (user_mail, message, link) => {
       secure: false, // true for 465, false for other ports
       service: "Gmail",
       auth: {
-        user: process.env.USER, // generated ethereal user
+        user: process.env.EMAIL, // generated ethereal user
         pass: process.env.PASS, // generated ethereal password
       },
     });
@@ -102,7 +102,7 @@ module.exports.notify_user = async (user_mail, message) => {
       secure: false, // true for 465, false for other ports
       service: "Gmail",
       auth: {
-        user: process.env.USER, // generated ethereal user
+        user: process.env.EMAIL, // generated ethereal user
         pass: process.env.PASS, // generated ethereal password
       },
     });
@@ -145,7 +145,7 @@ module.exports.notify_both_user = async (user_mail, user_message, provider_mail,
       secure: false, // true for 465, false for other ports
       service: "Gmail",
       auth: {
-        user: process.env.USER, // generated ethereal user
+        user: process.env.EMAIL, // generated ethereal user
         pass: process.env.PASS, // generated ethereal password
       },
     });
