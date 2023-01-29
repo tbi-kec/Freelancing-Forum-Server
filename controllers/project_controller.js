@@ -89,7 +89,7 @@ module.exports.project_developer_request_rejected = async (req, res) => {
         const { p_id, d_id } = { ...req.body };
         const project =await Project.findById(p_id).populate('requested').populate('createdBy');
         // const projecthistory = ProjectHistory.findById({ project_id: p_id });
-        project.requested = project.requested.remove(d_id);
+        project.requested.remove(d_id);
         project.admin_acceptedOn = "";
         //user
         const user = await User.findById(d_id);
@@ -214,7 +214,7 @@ module.exports.project_request_status = async (req, res) => {
 //progress
 module.exports.updateProgress = async (req, res) => {
     try {
-        const status_list = ['assigned', 'partial', 'testing', 'verify', 'completed']
+        const status_list = ['assigned', 'partial', 'testing', 'completed']
         const { p_id, status } = req.body;
         console.log(req.body);
         const project = await Project.findByIdAndUpdate(p_id, { project_status: status_list[status] }).populate('createdBy').populate('developer');
@@ -225,8 +225,8 @@ module.exports.updateProgress = async (req, res) => {
             await certificate.save();
             console.log(certificate);
             project.completed_on = Date.now();
-            client.onbord_project = client.onbord_project.remove(p_id);
-            developer.onbord_project = developer.onbord_project.remove(p_id);
+            client.onbord_project.remove(p_id);
+            developer.onbord_project.remove(p_id);
             developer.work_history.push(project);
             await client.save();
             await developer.save();
