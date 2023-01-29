@@ -17,7 +17,6 @@ const { constants } = require('buffer');
 
 //initilizing
 const app = express()
-app.use(express.static(path.join(__dirname, "/public")))
 dotenv.config()
 app.use(express.json({ extended: true }))
 app.use(express.urlencoded({ extended: true }));
@@ -33,23 +32,27 @@ mongoose.connect(process.env.DB).then(() => {
 });
 
 
-app.use('/user', userRoutes)
-app.use('/admin', adminRoutes)
-app.use('/certificate', certificateRoutes)
-app.use('/project', projectRoutes)
-app.use('/study',studyProjectRoutes)
-app.use('/constants',constantsRoutes)
+app.use('/api/user', userRoutes)
+app.use('/api/admin', adminRoutes)
+app.use('/api/certificate', certificateRoutes)
+app.use('/api/project', projectRoutes)
+app.use('/api/study',studyProjectRoutes)
+app.use('/api/constants',constantsRoutes)
 
 //default route
-app.get('/',(req,res)=>{
+app.get('/api/',(req,res)=>{
     res.send("FreelancingForum")    
 })
+app.use(express.static(path.join(__dirname,'./build')));
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname,'./build', 'index.html'));
+});
 
 
 
 //listening port
 //port
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 8443
 app.listen(PORT, () => {
     console.log(`Server is running at Port ${PORT}`)
 }
