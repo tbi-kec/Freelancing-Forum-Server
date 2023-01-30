@@ -32,7 +32,11 @@ mongoose.connect(process.env.DB).then(() => {
     console.log(err.message, 'oops err');
 });
 
-app.use(express.static(path.join(__dirname,process.env.CLIENTBASE ||'./build')));
+
+//default route
+app.get('/api/',(req,res)=>{
+    res.send("FreelancingForum")    
+})
 
 app.use('/api/user', userRoutes)
 app.use('/api/admin', adminRoutes)
@@ -41,11 +45,8 @@ app.use('/api/project', projectRoutes)
 app.use('/api/study',studyProjectRoutes)
 app.use('/api/constants',constantsRoutes)
 
-//default route
-app.get('/api/',(req,res)=>{
-    res.send("FreelancingForum")    
-})
 
+app.use(express.static(path.join(__dirname,process.env.CLIENTBASE ||'./build')));
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname,process.env.CLIENTBASE ||'./build', 'index.html'));
 });
