@@ -33,9 +33,6 @@ mongoose.connect(process.env.DB).then(() => {
 });
 
 app.use(express.static(path.join(__dirname,process.env.CLIENTBASE ||'./build')));
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname,process.env.CLIENTBASE ||'./build', 'index.html'));
-});
 
 app.use('/api/user', userRoutes)
 app.use('/api/admin', adminRoutes)
@@ -49,6 +46,9 @@ app.get('/api/',(req,res)=>{
     res.send("FreelancingForum")    
 })
 
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname,process.env.CLIENTBASE ||'./build', 'index.html'));
+});
 
 
 //listening port
