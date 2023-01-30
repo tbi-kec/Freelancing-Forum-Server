@@ -32,16 +32,20 @@ mongoose.connect(process.env.DB).then(() => {
     console.log(err.message, 'oops err');
 });
 
+app.use(express.static(path.join(__dirname,process.env.CLIENTBASE ||'./build')));
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname,process.env.CLIENTBASE ||'./build', 'index.html'));
+});
 
-app.use('/user', userRoutes)
-app.use('/admin', adminRoutes)
-app.use('/certificate', certificateRoutes)
-app.use('/project', projectRoutes)
-app.use('/study',studyProjectRoutes)
-app.use('/constants',constantsRoutes)
+app.use('/api/user', userRoutes)
+app.use('/api/admin', adminRoutes)
+app.use('/api/certificate', certificateRoutes)
+app.use('/api/project', projectRoutes)
+app.use('/api/study',studyProjectRoutes)
+app.use('/api/constants',constantsRoutes)
 
 //default route
-app.get('/',(req,res)=>{
+app.get('/api/',(req,res)=>{
     res.send("FreelancingForum")    
 })
 
