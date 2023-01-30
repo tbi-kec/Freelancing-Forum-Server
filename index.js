@@ -31,6 +31,10 @@ mongoose.connect(process.env.DB).then(() => {
     console.log(err.message, 'oops err');
 });
 
+app.use(express.static(path.join(__dirname,process.env.CLIENTBASE ||'./build')));
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname,process.env.CLIENTBASE ||'./build', 'index.html'));
+});
 
 app.use('/api/user', userRoutes)
 app.use('/api/admin', adminRoutes)
@@ -52,7 +56,7 @@ app.get('/*', function (req, res) {
 
 //listening port
 //port
-const PORT = process.env.PORT || 8443
+const PORT = process.env.PORT || 8080
 app.listen(PORT, () => {
     console.log(`Server is running at Port ${PORT}`)
 }
